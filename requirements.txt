@@ -9,3 +9,4 @@ flask-bcrypt
 cryptography
 python-dotenv
 email-validator
+psycopg2-binary
