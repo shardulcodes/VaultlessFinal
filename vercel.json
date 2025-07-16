@@ -1,9 +1,17 @@
-flask
-python-dotenv
-gunicorn
-flask_sqlalchemy
-flask_login
-flask_mail
-flask_limiter
-flask_talisman
-cryptography
+{
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ]
+}
