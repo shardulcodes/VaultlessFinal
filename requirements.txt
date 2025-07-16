@@ -5,5 +5,7 @@ Flask-WTF
 Flask-Limiter
 Flask-Talisman
 Flask-SQLAlchemy
+flask-bcrypt
 cryptography
 python-dotenv
+email-validator
