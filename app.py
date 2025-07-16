@@ -222,9 +222,11 @@ def change_password():
 
 
 # ==================== Run App ====================
-if __name__ == "__main__":
-    from models import db
-    with app.app_context():
-        db.create_all()
-    app.run()
+from models import db
 
+@app.before_first_request
+def initialize_database():
+    db.create_all()
+
+if __name__ == "__main__":
+    app.run()
