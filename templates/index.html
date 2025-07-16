@@ -1,0 +1,112 @@
+{% extends "base.html" %} {% block content %}
+<div class="generator-container">
+  <!-- Left Panel - Form -->
+  <div class="form-section upgraded-form">
+    <h2 class="section-title">
+      <i class="fas fa-lock"></i> Vaultless Password Generator
+    </h2>
+    <form id="generate-form" class="styled-form">
+      <div class="form-group">
+        <label for="name"> <i class="fas fa-globe"></i> Service Name </label>
+        <input
+          autocomplete="off"
+          type="text"
+          id="name"
+          placeholder="e.g. gmail.com"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="master_password">
+          <i class="fas fa-user-shield"></i> Master Password
+        </label>
+        <input
+          autocomplete="off"
+          type="password"
+          id="master_password"
+          placeholder="Enter your master password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="length">
+          <i class="fas fa-sliders-h"></i> Length (8–64)
+        </label>
+        <input type="number" id="length" value="16" min="8" max="64" />
+      </div>
+
+      <button type="submit" class="generate-btn">
+        <i class="fas fa-magic"></i> Generate Password
+      </button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <!-- Right Panel - Info (only if not logged in) -->
+  {% if not current_user.is_authenticated %}
+  <div class="info-section upgraded-info">
+    <h3>Why log in?</h3>
+    <ul class="benefits-list">
+      <li><i class="fas fa-key"></i> Personal encryption key for each user</li>
+      <li><i class="fas fa-sync-alt"></i> Deterministic password generation</li>
+      <li>
+        <i class="fas fa-shield-alt"></i> Protection from reuse & brute-force
+      </li>
+      <li><i class="fas fa-download"></i> Offline support via Docker</li>
+    </ul>
+  </div>
+  {% endif %}
+</div>
+
+<!-- ✅ Floating Toast Badge (outside main layout) -->
+{% if current_user.is_authenticated %}
+<div id="login-toast" class="toast-badge">
+  <i class="fas fa-user-shield"></i> Logged in securely
+</div>
+{% endif %}
+
+<script>
+  document
+    .getElementById("generate-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        master_password: document.getElementById("master_password").value,
+        length: document.getElementById("length").value,
+      };
+
+      const res = await fetch("/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json();
+      const resultDiv = document.getElementById("result");
+      if (json.password) {
+        resultDiv.innerHTML = `<strong>Your Password:</strong><br><code>${json.password}</code>`;
+      } else {
+        resultDiv.innerHTML = `<span style="color: red;">${json.error}</span>`;
+      }
+    });
+
+  // ✅ Auto-hide the toast after 3 seconds
+  window.addEventListener("DOMContentLoaded", () => {
+    const toast = document.getElementById("login-toast");
+    if (toast) {
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.5s ease";
+        setTimeout(() => toast.remove(), 500); // remove from DOM
+      }, 3000);
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,259 @@
+/* how_to_use.css */
+:root {
+  --primary: #000000;
+  --primary-dark: #3a56d4;
+  --secondary: #3f37c9;
+  --accent: #4cc9f0;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --gray: #6c757d;
+  --gray-light: #e9ecef;
+  --success: #2ecc71;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+  min-height: 100vh;
+}
+
+.howto-scope {
+  padding: 2rem 0;
+}
+
+.howto-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Styles */
+.howto-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.howto-heading {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.howto-subheading {
+  font-size: 1.2rem;
+  color: var(--gray);
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Section Styles */
+.howto-section {
+  margin-bottom: 3rem;
+}
+
+.howto-section-title {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--accent);
+  display: inline-block;
+}
+
+.howto-section-description {
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+/* Card Styles */
+.howto-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.howto-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.howto-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.howto-card-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.howto-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.howto-card:hover .howto-card-image img {
+  transform: scale(1.05);
+}
+
+.howto-card-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step-number {
+  background: var(--primary);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.howto-card p {
+  font-size: 1.1rem;
+  color: var(--dark);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.howto-card em {
+  color: var(--primary);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Pro Tips Styles */
+.howto-tips {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.howto-tips li {
+  margin-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  position: relative;
+  font-size: 1.1rem;
+  color: var(--dark);
+}
+
+.howto-tips li:last-child {
+  margin-bottom: 0;
+}
+
+.tip-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--success);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.howto-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: var(--transition);
+}
+
+.howto-link:hover {
+  color: var(--secondary);
+}
+
+.howto-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: var(--primary);
+  transition: var(--transition);
+}
+
+.howto-link:hover::after {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .howto-heading {
+    font-size: 2.2rem;
+  }
+
+  .howto-section-title {
+    font-size: 1.6rem;
+  }
+
+  .howto-card {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .howto-scope {
+    padding: 1rem 0;
+  }
+
+  .howto-container {
+    padding: 0 1rem;
+  }
+
+  .howto-heading {
+    font-size: 1.8rem;
+  }
+
+  .howto-subheading {
+    font-size: 1rem;
+  }
+
+  .howto-row {
+    gap: 1.5rem;
+  }
+
+  .howto-card-image {
+    height: 180px;
+  }
+
+  .howto-tips {
+    padding: 1.5rem;
+  }
+}

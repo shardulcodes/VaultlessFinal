@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}{% endblock %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+
+    <title>Password Generator</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- ✅ NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-left">
+        <a href="{{ url_for('index') }}" class="nav-logo">
+          <i class="fas fa-lock"></i> Vaultless
+        </a>
+      </div>
+
+      <div class="navbar-right">
+        <a href="{{ url_for('how_to_use') }}" class="nav-link">
+          <i class="fas fa-info-circle"></i> How to Use
+        </a>
+        <a href="{{ url_for('get_local') }}" class="nav-link">
+          <i class="fas fa-download"></i> Get It Locally
+        </a>
+
+        {% if current_user.is_authenticated %}
+        <!-- ✅ Dropdown -->
+        <div class="user-dropdown">
+          <div class="user-greet">
+            <i class="fas fa-user-circle"></i> {{ current_user.username }} ▾
+          </div>
+          <div class="dropdown-content">
+            <a href="{{ url_for('change_username') }}">
+              <i class="fas fa-user-edit"></i> Change Username
+            </a>
+            <a href="{{ url_for('change_password') }}">
+              <i class="fas fa-key"></i> Change Password
+            </a>
+            <a href="{{ url_for('logout') }}" class="logout-link">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </div>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="nav-link">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{{ url_for('register') }}" class="nav-link">
+          <i class="fas fa-user-plus"></i> Register
+        </a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <!-- ✅ Flash Messages -->
+    <div class="flash-container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+
+    <!-- ✅ MAIN CONTENT -->
+    <div class="main-container">{% block content %}{% endblock %}</div>
+
+    <!-- ✅ Flash Auto-Hide Script -->
+    <script>
+      setTimeout(() => {
+        document.querySelectorAll(".flash-message").forEach((msg) => {
+          msg.style.animation = "fadeOut 0.8s forwards";
+          setTimeout(() => msg.remove(), 800);
+        });
+      }, 4000);
+    </script>
+  </body>
+</html>

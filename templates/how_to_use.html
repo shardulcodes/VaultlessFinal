@@ -1,0 +1,170 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='how_to_use.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+{% endblock %} {% block content %}
+<div class="howto-scope">
+  <div class="howto-container">
+    <!-- Header Section -->
+    <header class="howto-header">
+      <h1 class="howto-heading">
+        <i class="fas fa-shield-alt me-2"></i> How to Use Vaultless
+      </h1>
+      <p class="howto-subheading">
+        Secure, deterministic password generation — your way.
+      </p>
+    </header>
+
+    <!-- Without Account Section -->
+    <section class="howto-section" aria-labelledby="without-account-heading">
+      <h2 id="without-account-heading" class="howto-section-title">
+        <i class="fas fa-user-lock me-2"></i> Using Vaultless Without an Account
+      </h2>
+      <p class="howto-section-description">
+        Generate secure passwords instantly without creating an account. Your
+        master password is never stored or transmitted.
+      </p>
+
+      <div class="howto-row">
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder1.png"
+              alt="Service name input field"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">1</div>
+            <p>
+              Enter a service name (e.g., <em>"Gmail"</em> or
+              <em>"Bank Account"</em>)
+            </p>
+          </div>
+        </div>
+
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder2.png"
+              alt="Master password input field"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">2</div>
+            <p>Enter your master password (never stored or transmitted)</p>
+          </div>
+        </div>
+
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder3.png"
+              alt="Password length slider"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">3</div>
+            <p>Choose desired length (8–64 characters)</p>
+          </div>
+        </div>
+
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder4.png"
+              alt="Generate password button"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">4</div>
+            <p>Click <strong>Generate</strong> to get your unique password</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- With Account Section -->
+    <section class="howto-section" aria-labelledby="with-account-heading">
+      <h2 id="with-account-heading" class="howto-section-title">
+        <i class="fas fa-user-shield me-2"></i> With an Account (Recommended)
+      </h2>
+      <p class="howto-section-description">
+        Create an account to enhance security and personalization. Your
+        passwords become uniquely tied to your identity.
+      </p>
+
+      <div class="howto-row">
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder5.png"
+              alt="Login and registration interface"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">1</div>
+            <p>Register or login to generate your personal key</p>
+          </div>
+        </div>
+
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder6.png"
+              alt="Unique password derivation process"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">2</div>
+            <p>Your passwords become personalized and unique to your account</p>
+          </div>
+        </div>
+
+        <div class="howto-card">
+          <div class="howto-card-image">
+            <img
+              src="/static/images/placeholder7.png"
+              alt="Security protection visualization"
+            />
+          </div>
+          <div class="howto-card-content">
+            <div class="step-number">3</div>
+            <p>Even with same inputs, different users get different results</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pro Tips Section -->
+    <section class="howto-section" aria-labelledby="pro-tips-heading">
+      <h2 id="pro-tips-heading" class="howto-section-title">
+        <i class="fas fa-lightbulb me-2"></i> Pro Tips
+      </h2>
+      <ul class="howto-tips">
+        <li>
+          <i class="fas fa-check-circle tip-icon"></i>
+          Use different names per service (e.g., "Gmail", "Netflix", "Banking")
+        </li>
+        <li>
+          <i class="fas fa-check-circle tip-icon"></i>
+          Remember your master password — it is never stored or transmitted
+        </li>
+        <li>
+          <i class="fas fa-check-circle tip-icon"></i>
+          Self-host Vaultless using our
+          <a href="#" class="howto-link">Docker guide</a> for full control
+        </li>
+        <li>
+          <i class="fas fa-check-circle tip-icon"></i>
+          Use our browser extension for seamless integration with websites
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+{% endblock %}

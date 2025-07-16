@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+<div class="form-container">
+  <h2><i class="fas fa-user-edit"></i> Change Username</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      {{ form.new_username.label(class="form-label") }} {{
+      form.new_username(class="form-input") }}
+    </div>
+
+    <div class="form-group">
+      {{ form.password.label(class="form-label") }} {{
+      form.password(class="form-input") }}
+    </div>
+
+    <div class="form-group">{{ form.submit(class="form-button") }}</div>
+  </form>
+</div>
+{% endblock %}

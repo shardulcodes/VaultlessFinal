@@ -1,0 +1,181 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='docker_install.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+{% endblock %} {% block content %}
+<div class="dkr-scope">
+  <div class="dkr-container">
+    <!-- Header Section -->
+    <header class="dkr-header">
+      <h1 class="dkr-heading">
+        <i class="fas fa-docker me-2"></i> Self-Host with Docker
+      </h1>
+      <p class="dkr-subheading">
+        Deploy your personal password generator locally for full control and
+        privacy.
+      </p>
+    </header>
+
+    <!-- Introduction Section -->
+    <section class="dkr-section" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="dkr-section-title">
+        <i class="fas fa-info-circle me-2"></i> About Vaultless
+      </h2>
+      <p class="dkr-section-description">
+        Vaultless is a secure, zero-storage password manager built using Flask.
+        It deterministically generates strong passwords based on a combination
+        of a master password, site/service name, and a device-specific secret —
+        without storing any actual passwords.
+      </p>
+    </section>
+
+    <!-- Installation Steps Section -->
+    <section class="dkr-section" aria-labelledby="installation-heading">
+      <h2 id="installation-heading" class="dkr-section-title">
+        <i class="fas fa-rocket me-2"></i> Steps to Run Locally
+      </h2>
+      <div class="dkr-steps">
+        <div class="dkr-step-item">
+          <div class="dkr-step-number">1</div>
+          <div class="dkr-step-content">
+            <h3>Clone the Repository</h3>
+            <pre><code>git clone https://github.com/shardulcodes/vaultless.git</code></pre>
+          </div>
+        </div>
+
+        <div class="dkr-step-item">
+          <div class="dkr-step-number">2</div>
+          <div class="dkr-step-content">
+            <h3>Navigate into the Folder</h3>
+            <pre><code>cd zero-storage-password-generator</code></pre>
+          </div>
+        </div>
+
+        <div class="dkr-step-item">
+          <div class="dkr-step-number">3</div>
+          <div class="dkr-step-content">
+            <h3>Build the Docker Image</h3>
+            <pre><code>docker build -t vaultless-password-manager .</code></pre>
+          </div>
+        </div>
+
+        <div class="dkr-step-item">
+          <div class="dkr-step-number">4</div>
+          <div class="dkr-step-content">
+            <h3>Run the Container</h3>
+            <pre><code>docker run -d -p 5000:5000 vaultless-password-manager</code></pre>
+          </div>
+        </div>
+
+        <div class="dkr-step-item">
+          <div class="dkr-step-number">5</div>
+          <div class="dkr-step-content">
+            <h3>Access Your Password Generator</h3>
+            <p>
+              Visit <code>http://localhost:5000</code> in your browser
+              <i class="fas fa-check-circle text-success"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dockerfile Example Section -->
+    <section class="dkr-section" aria-labelledby="dockerfile-heading">
+      <h2 id="dockerfile-heading" class="dkr-section-title">
+        <i class="fas fa-file-code me-2"></i> Dockerfile Example
+      </h2>
+      <pre class="dkr-dockerfile-block"><code>
+# Use Python base image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY . /app
+
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Expose port
+EXPOSE 5000
+
+# Run the app
+CMD ["python", "app.py"]
+      </code></pre>
+    </section>
+
+    <!-- Features Section -->
+    <section class="dkr-section" aria-labelledby="features-heading">
+      <h2 id="features-heading" class="dkr-section-title">
+        <i class="fas fa-star me-2"></i> Key Features
+      </h2>
+      <div class="dkr-row">
+        <div class="dkr-card">
+          <div class="dkr-card-icon">
+            <i class="fas fa-database fa-2x text-primary"></i>
+          </div>
+          <div class="dkr-card-content">
+            <h3>Zero Storage</h3>
+            <p>No passwords are stored anywhere</p>
+          </div>
+        </div>
+
+        <div class="dkr-card">
+          <div class="dkr-card-icon">
+            <i class="fas fa-fingerprint fa-2x text-primary"></i>
+          </div>
+          <div class="dkr-card-content">
+            <h3>Device-bound Secrets</h3>
+            <p>Passwords are tied to the specific machine</p>
+          </div>
+        </div>
+
+        <div class="dkr-card">
+          <div class="dkr-card-icon">
+            <i class="fas fa-sync-alt fa-2x text-primary"></i>
+          </div>
+          <div class="dkr-card-content">
+            <h3>Deterministic Generation</h3>
+            <p>Same input → same output every time</p>
+          </div>
+        </div>
+
+        <div class="dkr-card">
+          <div class="dkr-card-icon">
+            <i class="fas fa-shield-alt fa-2x text-primary"></i>
+          </div>
+          <div class="dkr-card-content">
+            <h3>PBKDF2 + HMAC Security</h3>
+            <p>Strong hashing and keyed hashing protect inputs</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="dkr-section" aria-labelledby="support-heading">
+      <h2 id="support-heading" class="dkr-section-title">
+        <i class="fas fa-life-ring me-2"></i> Need Help?
+      </h2>
+      <p class="dkr-section-description">
+        For support or customization, feel free to open an issue on our GitHub
+        repository:
+        <a
+          href="https://github.com/shardulcodes/vaultless"
+          target="_blank"
+          class="dkr-link"
+        >
+          <i class="fab fa-github me-2"></i> GitHub Repository
+        </a>
+      </p>
+    </section>
+  </div>
+</div>
+{% endblock %}

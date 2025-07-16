@@ -1,0 +1,301 @@
+/* docker_install.css */
+:root {
+  --dkr-primary: #000000;
+  --dkr-primary-dark: #1e7bc0;
+  --dkr-secondary: #3f37c9;
+  --dkr-accent: #4cc9f0;
+  --dkr-light: #f8f9fa;
+  --dkr-dark: #212529;
+  --dkr-gray: #6c757d;
+  --dkr-gray-light: #e9ecef;
+  --dkr-success: #2ecc71;
+  --dkr-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --dkr-transition: all 0.3s ease;
+}
+
+.dkr-scope {
+  padding: 2rem 0;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+}
+
+.dkr-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Styles */
+.dkr-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.dkr-heading {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--dkr-primary), var(--dkr-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.dkr-subheading {
+  font-size: 1.2rem;
+  color: var(--dkr-gray);
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Section Styles */
+.dkr-section {
+  margin-bottom: 3rem;
+}
+
+.dkr-section-title {
+  font-size: 2rem;
+  color: var(--dkr-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--dkr-accent);
+  display: inline-block;
+}
+
+.dkr-section-description {
+  font-size: 1.1rem;
+  color: var(--dkr-gray);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+/* Card Styles */
+.dkr-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.dkr-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--dkr-shadow);
+  transition: var(--dkr-transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dkr-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dkr-card-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.dkr-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--dkr-transition);
+}
+
+.dkr-card:hover .dkr-card-image img {
+  transform: scale(1.05);
+}
+
+.dkr-card-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dkr-card-icon {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.dkr-card-icon i {
+  color: var(--dkr-primary);
+  font-size: 2rem;
+}
+
+.dkr-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--dkr-dark);
+  font-weight: 600;
+}
+
+.dkr-card p {
+  color: var(--dkr-gray);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Step items styling */
+.dkr-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dkr-step-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--dkr-shadow);
+  display: flex;
+  align-items: flex-start;
+  transition: var(--dkr-transition);
+}
+
+.dkr-step-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dkr-step-number {
+  background: var(--dkr-primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.dkr-step-content {
+  flex-grow: 1;
+}
+
+.dkr-step-content h3 {
+  color: var(--dkr-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.dkr-step-content pre {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+/* Dockerfile block styling */
+.dkr-dockerfile-block {
+  background: #282c34;
+  color: #abb2bf;
+  border-radius: 12px;
+  padding: 1.5rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.dkr-dockerfile-block code {
+  color: #abb2bf;
+}
+
+/* Link styling */
+.dkr-link {
+  color: var(--dkr-primary);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: var(--dkr-transition);
+}
+
+.dkr-link:hover {
+  color: var(--dkr-secondary);
+}
+
+.dkr-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: var(--dkr-primary);
+  transition: var(--dkr-transition);
+}
+
+.dkr-link:hover::after {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dkr-heading {
+    font-size: 2.2rem;
+  }
+
+  .dkr-section-title {
+    font-size: 1.6rem;
+  }
+
+  .dkr-card {
+    min-height: 350px;
+  }
+
+  .dkr-step-item {
+    padding: 1rem;
+  }
+
+  .dkr-step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dkr-scope {
+    padding: 1rem 0;
+  }
+
+  .dkr-container {
+    padding: 0 1rem;
+  }
+
+  .dkr-heading {
+    font-size: 1.8rem;
+  }
+
+  .dkr-subheading {
+    font-size: 1rem;
+  }
+
+  .dkr-row {
+    gap: 1.5rem;
+  }
+
+  .dkr-card-image {
+    height: 150px;
+  }
+
+  .dkr-dockerfile-block {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+}

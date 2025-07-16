@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register - Vaultless</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(to right, #e0ecf8, #f8f9fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .form-container {
+        background: white;
+        padding: 40px 35px;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 420px;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 26px;
+        font-weight: 600;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 6px;
+        display: block;
+        font-weight: 500;
+      }
+
+      .form-group i {
+        margin-right: 6px;
+        color: #666;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .form-group input:focus {
+        border-color: #4caf50;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #5bbbf3ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.25s ease, transform 0.2s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #17caf2ff;
+        transform: translateY(-1px);
+      }
+
+      .checkbox-toggle {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: -10px 0 20px;
+        color: #555;
+        cursor: pointer;
+      }
+
+      .checkbox-toggle input[type="checkbox"] {
+        accent-color: #4caf50;
+        cursor: pointer;
+      }
+
+      .alert {
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .alert.success {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .alert:not(.success) {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .message {
+        text-align: center;
+        font-size: 14px;
+        color: #444;
+        margin-top: 15px;
+      }
+
+      .message a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .message a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .form-container {
+          padding: 30px 20px;
+        }
+
+        h2 {
+          font-size: 22px;
+        }
+
+        input,
+        button[type="submit"] {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2><i class="fas fa-user-plus"></i> Register</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert {{ 'success' if category == 'success' else '' }}">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> {{ form.username.label }}</label>
+          {{ form.username(size=32) }}
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> {{ form.email.label }}</label>
+          {{ form.email(size=32) }}
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> {{ form.password.label }}</label>
+          {{ form.password(id="password", size=32) }}
+        </div>
+
+        <div class="form-group">
+          <label
+            ><i class="fas fa-lock"></i> {{ form.confirm_password.label
+            }}</label
+          >
+          {{ form.confirm_password(id="confirm_password", size=32) }}
+        </div>
+
+        <label class="checkbox-toggle">
+          <input type="checkbox" onclick="togglePasswordVisibility()" />
+          Show Passwords
+        </label>
+
+        <button type="submit">{{ form.submit.label.text }}</button>
+      </form>
+
+      <div class="message">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login here</a>
+      </div>
+    </div>
+
+    <script>
+      function togglePasswordVisibility() {
+        const pw = document.getElementById("password");
+        const cpw = document.getElementById("confirm_password");
+        pw.type = pw.type === "password" ? "text" : "password";
+        cpw.type = cpw.type === "password" ? "text" : "password";
+      }
+    </script>
+  </body>
+</html>

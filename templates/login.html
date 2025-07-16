@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - Vaultless</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(to right, #e0ecf8, #f8f9fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .form-container {
+        background: #ffffff;
+        padding: 40px 35px;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 420px;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 26px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+      }
+
+      .form-input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+      }
+
+      .password-wrapper {
+        position: relative;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: #999;
+        cursor: pointer;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.25s ease, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #0069d9;
+        transform: translateY(-1px);
+      }
+
+      /* === Checkbox === */
+      .checkbox-wrapper {
+        margin: 10px 0 20px;
+      }
+
+      .custom-checkbox {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #444;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .styled-checkbox {
+        width: 16px;
+        height: 16px;
+        accent-color: #007bff;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      .checkbox-wrapper {
+        margin: 10px 0 20px;
+      }
+
+      .custom-checkbox {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #444;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .styled-checkbox {
+        width: 16px;
+        height: 16px;
+        accent-color: #007bff;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      .message,
+      .back-link {
+        text-align: center;
+        font-size: 14px;
+        color: #444;
+        margin-top: 12px;
+      }
+
+      .message a,
+      .back-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .message a:hover,
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+
+      .alert {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .alert.success {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .alert:not(.success) {
+        background-color: #f44336;
+        color: white;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .form-container {
+          padding: 30px 20px;
+        }
+
+        h2 {
+          font-size: 22px;
+        }
+
+        .form-input,
+        form button {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2><i class="fas fa-lock"></i> Login</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert {{ 'success' if category == 'success' else '' }}">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          <label class="form-label"
+            ><i class="fas fa-envelope"></i> {{ form.email.label }}</label
+          >
+          {{ form.email(class="form-input", size=32) }}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"
+            ><i class="fas fa-key"></i> {{ form.password.label }}</label
+          >
+          <div class="password-wrapper">
+            {{ form.password(class="form-input", id="password", size=32) }}
+            <i class="fas fa-eye toggle-password" id="toggle-password"></i>
+          </div>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <label class="custom-checkbox">
+            {{ form.remember(class="styled-checkbox") }}
+            <span>{{ form.remember.label.text }}</span>
+          </label>
+        </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+      </form>
+
+      <div class="message">
+        Don’t have an account?
+        <a href="{{ url_for('register') }}">Register here</a>
+      </div>
+
+      <div class="back-link">
+        <a href="{{ url_for('index') }}">← Back to Password Generator</a>
+      </div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("toggle-password");
+      const passwordInput = document.getElementById("password");
+
+      toggle.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        toggle.classList.toggle("fa-eye");
+        toggle.classList.toggle("fa-eye-slash");
+      });
+    </script>
+  </body>
+</html>
