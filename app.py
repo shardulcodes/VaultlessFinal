@@ -47,6 +47,14 @@ login_manager.login_message_category = 'info'
 DEVICE_SECRET_FILE = "device_secret.key"
 
 def get_or_create_secret(filename, length=64):
+    # If running on a read-only system (like Vercel), skip file I/O
+    if os.environ.get("READ_ONLY_ENV") == "true":
+        env_secret = os.environ.get("DEVICE_SECRET")
+        if not env_secret:
+            raise RuntimeError("DEVICE_SECRET not set in environment for read-only deployment.")
+        return base64.urlsafe_b64decode(env_secret)
+
+    # Normal local development: read or create the file
     if os.path.exists(filename):
         with open(filename, 'rb') as f:
             return f.read()
@@ -57,9 +65,6 @@ def get_or_create_secret(filename, length=64):
         return secret
 
 DEVICE_SECRET = get_or_create_secret(DEVICE_SECRET_FILE)
-
-def generate_user_key():
-    return base64.urlsafe_b64encode(os.urandom(64))
 
 # ==================== Password Generator ====================
 def generate_password(name: str, master_password: str, length: int, key: bytes = None) -> str:
