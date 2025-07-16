@@ -1,8 +1,9 @@
 Flask
 Flask-Mail
-Flask-WTF
-Flask-Bcrypt
 Flask-Login
+Flask-WTF
+Flask-Limiter
+Flask-Talisman
 Flask-SQLAlchemy
-email-validator
-itsdangerous
+cryptography
+python-dotenv
