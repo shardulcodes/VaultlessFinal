@@ -10,3 +10,4 @@ cryptography
 python-dotenv
 email-validator
 psycopg2-binary
+gunicorn
