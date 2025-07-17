@@ -3,8 +3,12 @@ Flask-Mail
 Flask-Login
 Flask-Limiter
 Flask-Talisman
+Flask-WTF
 bcrypt
-python-dotenv
 requests
-cryptography
+itsdangerous
 gunicorn
+python-dotenv
+supabase-py
+email-validator
+cryptography
