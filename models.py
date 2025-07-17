@@ -113,7 +113,7 @@ class User(UserMixin):
             return User._from_dict(res.json()[0])
         return None
 
-        @staticmethod
+    @staticmethod
     def _from_dict(data: dict) -> 'User':
         def decode_secret_key(key_str):
             import binascii
