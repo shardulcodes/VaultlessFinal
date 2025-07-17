@@ -4,11 +4,10 @@ Flask-Login
 Flask-Limiter
 Flask-Talisman
 Flask-WTF
-bcrypt
+Flask-Bcrypt
 requests
 itsdangerous
-gunicorn
 python-dotenv
-supabase
-email-validator
 cryptography
+gunicorn
+email-validator
