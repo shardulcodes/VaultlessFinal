@@ -97,6 +97,7 @@ def get_local():
 import os  # Make sure this is at the top of your file
 
 @app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -112,7 +113,9 @@ def register():
             username=form.username.data,
             email=form.email.data,
             password_hash=None,
-            is_verified=False
+            is_verified=False,
+            # ✅ Generate and assign a unique key here
+            secret_key=base64.urlsafe_b64encode(os.urandom(64)).decode('utf-8')
         )
         user.set_password(form.password.data)
 
@@ -142,6 +145,7 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
+
 
 
 
@@ -182,7 +186,7 @@ def login():
         if user and user.check_password(form.password.data):
             if user.is_verified:
                 if not user.secret_key:
-                    user.secret_key = os.urandom(64)
+                    user.secret_key = base64.urlsafe_b64encode(os.urandom(64)).decode('utf-8')
                     user.update_in_supabase()
                 login_user(user, remember=form.remember.data)
                 flash('Login successful.', 'success')
