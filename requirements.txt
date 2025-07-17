@@ -1,13 +1,10 @@
 Flask
 Flask-Mail
 Flask-Login
-Flask-WTF
 Flask-Limiter
 Flask-Talisman
-Flask-SQLAlchemy
-flask-bcrypt
-cryptography
+bcrypt
 python-dotenv
-email-validator
-psycopg2-binary
+requests
+cryptography
 gunicorn

@@ -1,37 +1,125 @@
-from flask_sqlalchemy import SQLAlchemy
+import os
+import requests
+import base64
+from typing import Optional
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from config import Config
 
-db = SQLAlchemy()
+# Initialize bcrypt for password hashing
 bcrypt = Bcrypt()
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    is_verified = db.Column(db.Boolean, default=False)
-    
-    # ➕ Add this line
-    secret_key = db.Column(db.LargeBinary(128), nullable=True)
+# Supabase environment variables
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
+SUPABASE_USERS_ENDPOINT = f"{SUPABASE_URL}/rest/v1/users"
 
-    def set_password(self, password):
-        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+# Common headers for Supabase requests
+HEADERS = {
+    "apikey": SUPABASE_API_KEY,
+    "Authorization": f"Bearer {SUPABASE_API_KEY}",
+    "Content-Type": "application/json",
+    "Prefer": "return=representation"
+}
 
-    def check_password(self, password):
+class User(UserMixin):
+    def __init__(self, id, username, email, password_hash, is_verified, secret_key=None):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.password_hash = password_hash
+        self.is_verified = is_verified
+        self.secret_key = secret_key  # bytes if present
+
+    def get_id(self) -> str:
+        return str(self.id)
+
+    def set_password(self, password: str):
+        self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+
+    def check_password(self, password: str) -> bool:
         return bcrypt.check_password_hash(self.password_hash, password)
 
-    def generate_verification_token(self):
+    def generate_verification_token(self) -> str:
         s = Serializer(Config.SECRET_KEY)
         return s.dumps(self.email)
 
     @staticmethod
-    def verify_token(token, expiration=3600):
+    def verify_token(token: str, expiration=3600) -> Optional[str]:
         s = Serializer(Config.SECRET_KEY)
         try:
-            email = s.loads(token, max_age=expiration)
+            return s.loads(token, max_age=expiration)
         except Exception:
             return None
-        return email
+
+    def save_to_supabase(self):
+        payload = {
+            "username": self.username,
+            "email": self.email,
+            "password_hash": self.password_hash,
+            "is_verified": self.is_verified,
+            "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
+        }
+        res = requests.post(SUPABASE_USERS_ENDPOINT, headers=HEADERS, json=payload)
+
+        if res.status_code not in (200, 201):
+            print("❌ Supabase save error:", res.status_code, res.text)
+            raise Exception(f"Supabase save error: {res.status_code} - {res.text}")
+
+        try:
+            self.id = res.json()[0]["id"]
+        except Exception as e:
+            print("⚠️ Failed to parse Supabase response:", res.text)
+            raise e
+
+    def update_in_supabase(self):
+        if not self.id:
+            raise ValueError("User ID is required for update.")
+        payload = {
+            "username": self.username,
+            "email": self.email,
+            "password_hash": self.password_hash,
+            "is_verified": self.is_verified,
+            "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
+        }
+        url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
+        res = requests.patch(url, headers=HEADERS, json=payload)
+        if res.status_code not in (200, 204):
+            print("❌ Supabase update error:", res.status_code, res.text)
+            raise Exception(f"Supabase update error: {res.status_code} - {res.text}")
+
+    @staticmethod
+    def get_by_email(email: str) -> Optional['User']:
+        url = f"{SUPABASE_USERS_ENDPOINT}?email=eq.{email}&select=*"
+        res = requests.get(url, headers=HEADERS)
+        if res.status_code == 200 and res.json():
+            return User._from_dict(res.json()[0])
+        return None
+
+    @staticmethod
+    def get_by_username(username: str) -> Optional['User']:
+        url = f"{SUPABASE_USERS_ENDPOINT}?username=eq.{username}&select=*"
+        res = requests.get(url, headers=HEADERS)
+        if res.status_code == 200 and res.json():
+            return User._from_dict(res.json()[0])
+        return None
+
+    @staticmethod
+    def get_by_id(user_id: int) -> Optional['User']:
+        url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{user_id}&select=*"
+        res = requests.get(url, headers=HEADERS)
+        if res.status_code == 200 and res.json():
+            return User._from_dict(res.json()[0])
+        return None
+
+    @staticmethod
+    def _from_dict(data: dict) -> 'User':
+        return User(
+            id=data.get("id"),
+            username=data.get("username"),
+            email=data.get("email"),
+            password_hash=data.get("password_hash"),
+            is_verified=data.get("is_verified"),
+            secret_key=base64.b64decode(data["secret_key"]) if data.get("secret_key") else None
+        )

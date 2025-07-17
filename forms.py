@@ -12,11 +12,11 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_username(self, username):
-        if User.query.filter_by(username=username.data).first():
+        if User.get_by_username(username.data):
             raise ValidationError('Username already exists.')
 
     def validate_email(self, email):
-        if User.query.filter_by(email=email.data).first():
+        if User.get_by_email(email.data):
             raise ValidationError('Email already registered.')
 
 class LoginForm(FlaskForm):
@@ -25,7 +25,6 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-# ✅ Change Username Form
 class ChangeUsernameForm(FlaskForm):
     new_username = StringField('New Username', validators=[DataRequired(), Length(min=3, max=20)])
     password = PasswordField('Current Password', validators=[DataRequired()])
@@ -33,10 +32,9 @@ class ChangeUsernameForm(FlaskForm):
 
     def validate_new_username(self, new_username):
         if new_username.data != current_user.username:
-            if User.query.filter_by(username=new_username.data).first():
+            if User.get_by_username(new_username.data):
                 raise ValidationError('Username already exists.')
 
-# ✅ Change Password Form
 class ChangePasswordForm(FlaskForm):
     current_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=6)])
