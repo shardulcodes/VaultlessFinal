@@ -127,7 +127,7 @@ def register():
         try:
             token = user.generate_verification_token()
             base_url = os.getenv("BASE_URL", "http://localhost:5000")
-            verify_url = f"{base_url}/verify_email/{token}"
+            verify_url = f"{base_url}/verify/{token}"
 
             msg = Message('Verify Your Email',
                           sender=app.config['MAIL_USERNAME'],
