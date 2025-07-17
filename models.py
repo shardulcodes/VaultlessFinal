@@ -113,13 +113,30 @@ class User(UserMixin):
             return User._from_dict(res.json()[0])
         return None
 
-    @staticmethod
+        @staticmethod
     def _from_dict(data: dict) -> 'User':
+        def decode_secret_key(key_str):
+            import binascii
+            try:
+                if key_str.startswith("\\x") or key_str.startswith("0x"):
+                    # Convert escaped hex (e.g., \x66\x32...) to raw bytes
+                    key_str = key_str.encode("utf-8").decode("unicode_escape")
+                    return bytes.fromhex(key_str.replace("\\x", ""))
+                # Otherwise assume Base64
+                return base64.b64decode(key_str)
+            except (binascii.Error, ValueError) as e:
+                print(f"❌ Error decoding secret_key: {e}")
+                return None
+
+        secret_key_raw = data.get("secret_key")
+        decoded_key = decode_secret_key(secret_key_raw) if secret_key_raw else None
+
         return User(
             id=data.get("id"),
             username=data.get("username"),
             email=data.get("email"),
             password_hash=data.get("password_hash"),
             is_verified=data.get("is_verified"),
-            secret_key=base64.b64decode(data["secret_key"]) if data.get("secret_key") else None
+            secret_key=decoded_key
         )
+
