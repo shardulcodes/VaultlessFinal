@@ -9,6 +9,6 @@ requests
 itsdangerous
 gunicorn
 python-dotenv
-supabase-py
+supabase
 email-validator
 cryptography
