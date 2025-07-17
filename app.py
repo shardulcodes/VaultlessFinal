@@ -211,12 +211,14 @@ def change_username():
     if form.validate_on_submit():
         if bcrypt.check_password_hash(current_user.password_hash, form.password.data):
             current_user.username = form.new_username.data
+            # ✅ Update while preserving secret_key
             current_user.update_in_supabase()
             flash('Username updated successfully.', 'success')
             return redirect(url_for('index'))
         else:
             flash('Incorrect password.', 'danger')
     return render_template('change_username.html', form=form)
+
 
 @app.route('/change_password', methods=['GET', 'POST'])
 @login_required
@@ -225,12 +227,14 @@ def change_password():
     if form.validate_on_submit():
         if bcrypt.check_password_hash(current_user.password_hash, form.current_password.data):
             current_user.password_hash = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+            # ✅ Update while preserving secret_key
             current_user.update_in_supabase()
             flash('Password updated successfully.', 'success')
             return redirect(url_for('index'))
         else:
             flash('Current password is incorrect.', 'danger')
     return render_template('change_password.html', form=form)
+
 
 if __name__ == "__main__":
     app.run(ssl_context="adhoc")
