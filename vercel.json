@@ -1,30 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.py"
-    }
-  ],
-  "env": {
-    "SECRET_KEY": "@secret_key",
-    "MAIL_USERNAME": "@mail_username",
-    "MAIL_PASSWORD": "@mail_password",
-    "MAIL_SERVER": "smtp.gmail.com",
-    "MAIL_PORT": "587",
-    "MAIL_USE_TLS": "True",
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_API_KEY": "@supabase_api_key",
-    "DEVICE_SECRET": "@device_secret",
-    "BASE_URL": "@base_url"
-  }
+  "builds": [{ "src": "app.py", "use": "@vercel/python" }],
+  "routes": [{ "src": "/(.*)", "dest": "app.py" }]
 }
