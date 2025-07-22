@@ -7,15 +7,12 @@ from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from config import Config
 
-# Initialize bcrypt for password hashing
 bcrypt = Bcrypt()
 
-# Supabase environment variables
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
 SUPABASE_USERS_ENDPOINT = f"{SUPABASE_URL}/rest/v1/users"
 
-# Common headers for Supabase requests
 HEADERS = {
     "apikey": SUPABASE_API_KEY,
     "Authorization": f"Bearer {SUPABASE_API_KEY}",
@@ -30,7 +27,7 @@ class User(UserMixin):
         self.email = email
         self.password_hash = password_hash
         self.is_verified = is_verified
-        self.secret_key = secret_key  # bytes if present
+        self.secret_key = secret_key  # raw bytes
 
     def get_id(self) -> str:
         return str(self.id)
@@ -62,11 +59,9 @@ class User(UserMixin):
             "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
         }
         res = requests.post(SUPABASE_USERS_ENDPOINT, headers=HEADERS, json=payload)
-
         if res.status_code not in (200, 201):
             print("❌ Supabase save error:", res.status_code, res.text)
             raise Exception(f"Supabase save error: {res.status_code} - {res.text}")
-
         try:
             self.id = res.json()[0]["id"]
         except Exception as e:
@@ -76,6 +71,13 @@ class User(UserMixin):
     def update_in_supabase(self):
         if not self.id:
             raise ValueError("User ID is required for update.")
+
+        # Prevent accidental loss of secret_key
+        if not self.secret_key:
+            existing = User.get_by_id(self.id)
+            if existing and existing.secret_key:
+                self.secret_key = existing.secret_key
+
         payload = {
             "username": self.username,
             "email": self.email,
@@ -83,6 +85,7 @@ class User(UserMixin):
             "is_verified": self.is_verified,
             "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
         }
+
         url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
         res = requests.patch(url, headers=HEADERS, json=payload)
         if res.status_code not in (200, 204):
@@ -118,11 +121,8 @@ class User(UserMixin):
         def decode_secret_key(key_str):
             import binascii
             try:
-                if key_str.startswith("\\x") or key_str.startswith("0x"):
-                    # Convert escaped hex (e.g., \x66\x32...) to raw bytes
-                    key_str = key_str.encode("utf-8").decode("unicode_escape")
-                    return bytes.fromhex(key_str.replace("\\x", ""))
-                # Otherwise assume Base64
+                if key_str.startswith("\\x"):
+                    return bytes.fromhex(key_str[2:])
                 return base64.b64decode(key_str)
             except (binascii.Error, ValueError) as e:
                 print(f"❌ Error decoding secret_key: {e}")
@@ -139,4 +139,3 @@ class User(UserMixin):
             is_verified=data.get("is_verified"),
             secret_key=decoded_key
         )
-
