@@ -95,7 +95,7 @@ def generate():
 def get_local():
     return render_template('docker_install.html')
 
-import os  # Make sure this is at the top of your file
+
 
 @app.route('/register', methods=['GET', 'POST'])
 

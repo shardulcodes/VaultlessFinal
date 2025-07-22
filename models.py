@@ -63,15 +63,20 @@ class User(UserMixin):
 
     def save_to_supabase(self):
         payload = self.to_dict()
+        print("📤 [DEBUG] Sending to Supabase:", payload)
+
         res = requests.post(SUPABASE_USERS_ENDPOINT, headers=HEADERS, json=payload)
+        print("📥 [DEBUG] Supabase response:", res.status_code, res.text)
+
         if res.status_code not in (200, 201):
-            print("❌ Supabase save error:", res.status_code, res.text)
             raise Exception(f"Supabase save error: {res.status_code} - {res.text}")
+
         try:
             self.id = res.json()[0]["id"]
         except Exception as e:
-            print("⚠️ Failed to parse Supabase response:", res.text)
+            print("⚠️ [DEBUG] Failed to parse Supabase response:", res.text)
             raise e
+
 
     def update_in_supabase(self):
         if not self.id:
