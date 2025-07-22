@@ -20,6 +20,7 @@ HEADERS = {
     "Prefer": "return=representation"
 }
 
+
 class User(UserMixin):
     def __init__(self, id, username, email, password_hash, is_verified, secret_key=None):
         self.id = id
@@ -76,18 +77,28 @@ class User(UserMixin):
         if not self.id:
             raise ValueError("User ID is required for update.")
 
-        # Prevent accidental overwriting of secret_key
-        if not self.secret_key:
-            existing = User.get_by_id(self.id)
-            if existing and existing.secret_key:
-                self.secret_key = existing.secret_key
+        # 🛡 Always fetch existing secret_key from Supabase, and use it — never trust in-memory value
+        existing = User.get_by_id(self.id)
+        if not existing or not existing.secret_key:
+            raise Exception("Failed to fetch existing user or secret_key for update.")
+        preserved_secret_key = existing.secret_key
 
-        payload = self.to_dict()
+        payload = {
+            "username": self.username,
+            "email": self.email,
+            "password_hash": self.password_hash,
+            "is_verified": self.is_verified,
+            "secret_key": base64.b64encode(preserved_secret_key).decode()
+        }
+
         url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
         res = requests.patch(url, headers=HEADERS, json=payload)
         if res.status_code not in (200, 204):
             print("❌ Supabase update error:", res.status_code, res.text)
             raise Exception(f"Supabase update error: {res.status_code} - {res.text}")
+
+        # Restore preserved key in memory too, in case something overwrote it
+        self.secret_key = preserved_secret_key
 
     @staticmethod
     def get_by_email(email: str) -> Optional['User']:

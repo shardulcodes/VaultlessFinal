@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import os, base64, hashlib, string, hmac, requests
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
+from flask import current_app  # for BASE_URL fallback
 
 # ==================== App Setup ====================
 app = Flask(__name__)
@@ -97,6 +98,8 @@ def get_local():
 import os  # Make sure this is at the top of your file
 
 @app.route('/register', methods=['GET', 'POST'])
+
+
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -116,6 +119,9 @@ def register():
         )
         user.set_password(form.password.data)
 
+        # ✅ Generate a secret key once — and only once
+        user.secret_key = os.urandom(64)
+
         try:
             user.save_to_supabase()
         except Exception as e:
@@ -123,7 +129,7 @@ def register():
             flash("Something went wrong while registering. Please try again.", "danger")
             return redirect(url_for("register"))
 
-        # Email Verification
+        # ✅ Email Verification
         try:
             token = user.generate_verification_token()
             base_url = os.getenv("BASE_URL", "http://localhost:5000")
@@ -142,6 +148,7 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
+
 
 
 
