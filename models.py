@@ -52,14 +52,19 @@ class User(UserMixin):
             return None
 
     def to_dict(self) -> dict:
-        return {
-            "id": self.id,
+        data = {
             "username": self.username,
             "email": self.email,
             "password_hash": self.password_hash,
             "is_verified": self.is_verified,
             "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
         }
+
+        if self.id is not None:
+            data["id"] = self.id 
+
+        return data
+
 
     def save_to_supabase(self):
         payload = self.to_dict()
