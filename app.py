@@ -182,8 +182,9 @@ def login():
         if user and user.check_password(form.password.data):
             if user.is_verified:
                 if not user.secret_key:
-                    user.secret_key = os.urandom(64)
-                    user.update_in_supabase()
+                    flash('Your account is missing a secret key. Please contact support.', 'danger')
+                    return redirect(url_for('login'))
+
                 login_user(user, remember=form.remember.data)
                 flash('Login successful.', 'success')
                 return redirect(url_for('index'))

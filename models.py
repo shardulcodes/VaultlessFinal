@@ -50,14 +50,18 @@ class User(UserMixin):
         except Exception:
             return None
 
-    def save_to_supabase(self):
-        payload = {
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
             "username": self.username,
             "email": self.email,
             "password_hash": self.password_hash,
             "is_verified": self.is_verified,
             "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
         }
+
+    def save_to_supabase(self):
+        payload = self.to_dict()
         res = requests.post(SUPABASE_USERS_ENDPOINT, headers=HEADERS, json=payload)
         if res.status_code not in (200, 201):
             print("❌ Supabase save error:", res.status_code, res.text)
@@ -72,20 +76,13 @@ class User(UserMixin):
         if not self.id:
             raise ValueError("User ID is required for update.")
 
-        # Prevent accidental loss of secret_key
+        # Prevent accidental overwriting of secret_key
         if not self.secret_key:
             existing = User.get_by_id(self.id)
             if existing and existing.secret_key:
                 self.secret_key = existing.secret_key
 
-        payload = {
-            "username": self.username,
-            "email": self.email,
-            "password_hash": self.password_hash,
-            "is_verified": self.is_verified,
-            "secret_key": base64.b64encode(self.secret_key).decode() if self.secret_key else None
-        }
-
+        payload = self.to_dict()
         url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
         res = requests.patch(url, headers=HEADERS, json=payload)
         if res.status_code not in (200, 204):
@@ -117,19 +114,20 @@ class User(UserMixin):
         return None
 
     @staticmethod
-    def _from_dict(data: dict) -> 'User':
-        def decode_secret_key(key_str):
-            import binascii
-            try:
-                if key_str.startswith("\\x"):
-                    return bytes.fromhex(key_str[2:])
-                return base64.b64decode(key_str)
-            except (binascii.Error, ValueError) as e:
-                print(f"❌ Error decoding secret_key: {e}")
-                return None
+    def decode_secret_key(key_str: str) -> Optional[bytes]:
+        import binascii
+        try:
+            if key_str.startswith("\\x"):
+                return bytes.fromhex(key_str[2:])
+            return base64.b64decode(key_str)
+        except (binascii.Error, ValueError) as e:
+            print(f"❌ Error decoding secret_key: {e}")
+            return None
 
+    @staticmethod
+    def _from_dict(data: dict) -> 'User':
         secret_key_raw = data.get("secret_key")
-        decoded_key = decode_secret_key(secret_key_raw) if secret_key_raw else None
+        decoded_key = User.decode_secret_key(secret_key_raw) if secret_key_raw else None
 
         return User(
             id=data.get("id"),
