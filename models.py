@@ -77,19 +77,27 @@ class User(UserMixin):
         if not self.id:
             raise ValueError("User ID is required for update.")
 
-        # 🛡 Always fetch existing secret_key from Supabase, and use it — never trust in-memory value
+        # 🛡 Fetch existing to preserve the real secret_key
         existing = User.get_by_id(self.id)
         if not existing or not existing.secret_key:
-            raise Exception("Failed to fetch existing user or secret_key for update.")
+            raise Exception("User not found or missing secret_key.")
+
         preserved_secret_key = existing.secret_key
 
-        payload = {
-            "username": self.username,
-            "email": self.email,
-            "password_hash": self.password_hash,
-            "is_verified": self.is_verified,
-            "secret_key": base64.b64encode(preserved_secret_key).decode()
-        }
+        # Prepare only fields to update — never touch secret_key
+        payload = {}
+
+        if self.username != existing.username:
+            payload["username"] = self.username
+        if self.email != existing.email:
+            payload["email"] = self.email
+        if self.password_hash and self.password_hash != existing.password_hash:
+            payload["password_hash"] = self.password_hash
+        if self.is_verified != existing.is_verified:
+            payload["is_verified"] = self.is_verified
+
+        # Always preserve secret_key
+        payload["secret_key"] = base64.b64encode(preserved_secret_key).decode()
 
         url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
         res = requests.patch(url, headers=HEADERS, json=payload)
@@ -97,7 +105,7 @@ class User(UserMixin):
             print("❌ Supabase update error:", res.status_code, res.text)
             raise Exception(f"Supabase update error: {res.status_code} - {res.text}")
 
-        # Restore preserved key in memory too, in case something overwrote it
+        # Update in-memory
         self.secret_key = preserved_secret_key
 
     @staticmethod
