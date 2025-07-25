@@ -489,3 +489,60 @@ form button:hover {
   color: #2c3e50;
   word-break: break-all;
 }
+
+/* === Hamburger Menu === */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Mobile-Specific Adjustments */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .navbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .navbar-links {
+    display: none;
+    width: 100%;
+  }
+
+  .navbar-links.show {
+    display: block;
+  }
+
+  .navbar-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+    width: 100%;
+  }
+
+  .navbar-right a,
+  .user-greet {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .dropdown-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .dropdown-content a {
+    padding: 10px 16px;
+  }
+}

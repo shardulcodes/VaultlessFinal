@@ -25,41 +25,48 @@
           <i class="fas fa-lock"></i> Vaultless
         </a>
       </div>
+      <!-- Hamburger Menu (only on mobile) -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </div>
 
-      <div class="navbar-right">
-        <a href="{{ url_for('how_to_use') }}" class="nav-link">
-          <i class="fas fa-info-circle"></i> How to Use
-        </a>
-        <a href="{{ url_for('get_local') }}" class="nav-link">
-          <i class="fas fa-download"></i> Get It Locally
-        </a>
+      <!-- Nav Links Wrapper -->
+      <div class="navbar-links" id="navbarLinks">
+        <div class="navbar-right">
+          <a href="{{ url_for('how_to_use') }}" class="nav-link">
+            <i class="fas fa-info-circle"></i> How to Use
+          </a>
+          <a href="{{ url_for('get_local') }}" class="nav-link">
+            <i class="fas fa-download"></i> Get It Locally
+          </a>
 
-        {% if current_user.is_authenticated %}
-        <!-- ✅ Dropdown -->
-        <div class="user-dropdown">
-          <div class="user-greet">
-            <i class="fas fa-user-circle"></i> {{ current_user.username }} ▾
+          {% if current_user.is_authenticated %}
+          <!-- ✅ Dropdown -->
+          <div class="user-dropdown">
+            <div class="user-greet">
+              <i class="fas fa-user-circle"></i> {{ current_user.username }} ▾
+            </div>
+            <div class="dropdown-content">
+              <a href="{{ url_for('change_username') }}">
+                <i class="fas fa-user-edit"></i> Change Username
+              </a>
+              <a href="{{ url_for('change_password') }}">
+                <i class="fas fa-key"></i> Change Password
+              </a>
+              <a href="{{ url_for('logout') }}" class="logout-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
           </div>
-          <div class="dropdown-content">
-            <a href="{{ url_for('change_username') }}">
-              <i class="fas fa-user-edit"></i> Change Username
-            </a>
-            <a href="{{ url_for('change_password') }}">
-              <i class="fas fa-key"></i> Change Password
-            </a>
-            <a href="{{ url_for('logout') }}" class="logout-link">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </div>
+          {% else %}
+          <a href="{{ url_for('login') }}" class="nav-link">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a href="{{ url_for('register') }}" class="nav-link">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
+          {% endif %}
         </div>
-        {% else %}
-        <a href="{{ url_for('login') }}" class="nav-link">
-          <i class="fas fa-sign-in-alt"></i> Login
-        </a>
-        <a href="{{ url_for('register') }}" class="nav-link">
-          <i class="fas fa-user-plus"></i> Register
-        </a>
-        {% endif %}
       </div>
     </nav>
 
@@ -82,6 +89,12 @@
           setTimeout(() => msg.remove(), 800);
         });
       }, 4000);
+    </script>
+    <script>
+      function toggleMenu() {
+        const links = document.getElementById("navbarLinks");
+        links.classList.toggle("show");
+      }
     </script>
   </body>
 </html>
