@@ -2,10 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - Vaultless</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link
@@ -15,360 +14,141 @@
     <style>
       * {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      :root {
-        --primary-color: #3b82f6;
-        --primary-hover: #2563eb;
-        --success-color: #10b981;
-        --error-color: #ef4444;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --border-color: #d1d5db;
-        --border-focus: #3b82f6;
-        --background: #f8fafc;
-        --card-background: #ffffff;
-        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-          0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-          0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(to right, #e0ecf8, #f8f9fa);
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 100vh;
+        margin: 0;
         padding: 20px;
-        line-height: 1.6;
       }
 
       .form-container {
-        background: var(--card-background);
-        padding: 48px 40px;
-        border-radius: 16px;
-        box-shadow: var(--shadow);
+        background: white;
+        padding: 40px 35px;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         width: 100%;
-        max-width: 440px;
-        position: relative;
-        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        transition: var(--transition);
-      }
-
-      .form-container:hover {
-        box-shadow: var(--shadow-hover);
+        max-width: 420px;
+        animation: fadeIn 0.5s ease-in-out;
       }
 
       h2 {
         text-align: center;
-        margin-bottom: 32px;
-        color: var(--text-primary);
-        font-size: 28px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-      }
-
-      h2 i {
-        color: var(--primary-color);
-        font-size: 24px;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 26px;
+        font-weight: 600;
       }
 
       .form-group {
-        margin-bottom: 24px;
-        position: relative;
+        margin-bottom: 20px;
       }
 
       .form-group label {
-        display: block;
         font-size: 14px;
+        color: #333;
+        margin-bottom: 6px;
+        display: block;
         font-weight: 500;
-        color: var(--text-primary);
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
       }
 
-      .form-group label i {
-        color: var(--text-secondary);
-        width: 16px;
-        text-align: center;
+      .form-group i {
+        margin-right: 6px;
+        color: #666;
       }
 
       .form-group input {
         width: 100%;
-        padding: 14px 16px;
-        border: 2px solid var(--border-color);
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 400;
-        color: var(--text-primary);
-        background: var(--card-background);
-        transition: var(--transition);
-        outline: none;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
       }
 
       .form-group input:focus {
-        border-color: var(--border-focus);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        border-color: #4caf50;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #5bbbf3ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.25s ease, transform 0.2s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #17caf2ff;
         transform: translateY(-1px);
       }
 
-      .form-group input:valid {
-        border-color: var(--success-color);
-      }
-
-      .form-group input.error {
-        border-color: var(--error-color);
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-      }
-
-      .form-group .field-icon {
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-secondary);
-        font-size: 16px;
-        opacity: 0;
-        transition: var(--transition);
-        pointer-events: none;
-      }
-
-      .form-group input:valid + .field-icon.success {
-        opacity: 1;
-        color: var(--success-color);
-      }
-
-      .form-group input.error + .field-icon.error {
-        opacity: 1;
-        color: var(--error-color);
-      }
-
       .checkbox-toggle {
+        font-size: 14px;
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin: 20px 0 32px;
-        font-size: 14px;
-        color: var(--text-secondary);
+        gap: 8px;
+        margin: -10px 0 20px;
+        color: #555;
         cursor: pointer;
-        user-select: none;
-        transition: var(--transition);
-      }
-
-      .checkbox-toggle:hover {
-        color: var(--text-primary);
       }
 
       .checkbox-toggle input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: var(--primary-color);
+        accent-color: #4caf50;
         cursor: pointer;
-        border-radius: 4px;
-      }
-
-      .submit-btn {
-        width: 100%;
-        padding: 16px;
-        background: linear-gradient(
-          135deg,
-          var(--primary-color) 0%,
-          var(--primary-hover) 100%
-        );
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .submit-btn:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-      }
-
-      .submit-btn:active {
-        transform: translateY(0);
-      }
-
-      .submit-btn:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .submit-btn .loading-spinner {
-        display: none;
-        width: 20px;
-        height: 20px;
-        border: 2px solid transparent;
-        border-top: 2px solid white;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-right: 8px;
-      }
-
-      .submit-btn.loading .loading-spinner {
-        display: inline-block;
-      }
-
-      .submit-btn.loading .btn-text {
-        opacity: 0.8;
       }
 
       .alert {
-        padding: 16px;
-        border-radius: 10px;
+        padding: 12px;
+        border-radius: 8px;
         font-size: 14px;
-        font-weight: 500;
         text-align: center;
-        margin-bottom: 24px;
-        position: relative;
-        animation: slideDown 0.3s ease-out;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
+        margin-bottom: 20px;
       }
 
       .alert.success {
-        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-        color: #065f46;
-        border: 1px solid #10b981;
+        background-color: #4caf50;
+        color: white;
       }
 
       .alert:not(.success) {
-        background: linear-gradient(135deg, #fef2f2, #fecaca);
-        color: #991b1b;
-        border: 1px solid #ef4444;
-      }
-
-      .alert i {
-        font-size: 16px;
-      }
-
-      .alert .close-btn {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        opacity: 0.7;
-        transition: var(--transition);
-      }
-
-      .alert .close-btn:hover {
-        opacity: 1;
+        background-color: #f44336;
+        color: white;
       }
 
       .message {
         text-align: center;
         font-size: 14px;
-        color: var(--text-secondary);
-        margin-top: 24px;
-        padding-top: 24px;
-        border-top: 1px solid #f3f4f6;
+        color: #444;
+        margin-top: 15px;
       }
 
       .message a {
-        color: var(--primary-color);
+        color: #007bff;
         text-decoration: none;
-        font-weight: 600;
-        transition: var(--transition);
+        font-weight: 500;
       }
 
       .message a:hover {
-        color: var(--primary-hover);
         text-decoration: underline;
       }
 
-      .error-message {
-        font-size: 12px;
-        color: var(--error-color);
-        margin-top: 4px;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: var(--transition);
-      }
-
-      .error-message.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .strength-meter {
-        margin-top: 8px;
-        height: 4px;
-        background: #f3f4f6;
-        border-radius: 2px;
-        overflow: hidden;
-        opacity: 0;
-        transition: var(--transition);
-      }
-
-      .strength-meter.show {
-        opacity: 1;
-      }
-
-      .strength-fill {
-        height: 100%;
-        border-radius: 2px;
-        transition: var(--transition);
-        width: 0;
-      }
-
-      .strength-weak {
-        background: #ef4444;
-        width: 25%;
-      }
-      .strength-fair {
-        background: #f59e0b;
-        width: 50%;
-      }
-      .strength-good {
-        background: #3b82f6;
-        width: 75%;
-      }
-      .strength-strong {
-        background: #10b981;
-        width: 100%;
-      }
-
-      @keyframes slideUp {
+      @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
+          transform: translateY(25px);
         }
         to {
           opacity: 1;
@@ -376,306 +156,80 @@
         }
       }
 
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
       @media (max-width: 480px) {
-        body {
-          padding: 16px;
-        }
-
         .form-container {
-          padding: 32px 24px;
-          border-radius: 12px;
+          padding: 30px 20px;
         }
 
         h2 {
-          font-size: 24px;
-          margin-bottom: 24px;
+          font-size: 22px;
         }
 
-        .form-group {
-          margin-bottom: 20px;
-        }
-
-        .form-group input,
-        .submit-btn {
-          font-size: 16px; /* Prevents zoom on iOS */
-          padding: 12px 14px;
-        }
-
-        .submit-btn {
-          padding: 14px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
+        input,
+        button[type="submit"] {
+          font-size: 14px;
         }
       }
     </style>
   </head>
   <body>
     <div class="form-container">
-      <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+      <h2><i class="fas fa-user-plus"></i> Register</h2>
 
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
-      <div
-        class="alert {{ 'success' if category == 'success' else '' }}"
-        id="alert"
-      >
-        <i
-          class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' }}"
-        ></i>
+      <div class="alert {{ 'success' if category == 'success' else '' }}">
         {{ message }}
-        <button class="close-btn" onclick="closeAlert()">
-          <i class="fas fa-times"></i>
-        </button>
       </div>
       {% endfor %} {% endif %} {% endwith %}
 
-      <form method="POST" action="" id="registerForm" novalidate>
+      <form method="POST" action="">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-          <label for="username">
-            <i class="fas fa-user"></i>
-            {{ form.username.label }}
-          </label>
-          {{ form.username(id="username", size=32, required=true, minlength=3,
-          maxlength=20) }}
-          <i class="field-icon success fas fa-check"></i>
-          <i class="field-icon error fas fa-times"></i>
-          <div class="error-message" id="username-error"></div>
+          <label><i class="fas fa-user"></i> {{ form.username.label }}</label>
+          {{ form.username(size=32) }}
         </div>
 
         <div class="form-group">
-          <label for="email">
-            <i class="fas fa-envelope"></i>
-            {{ form.email.label }}
-          </label>
-          {{ form.email(id="email", size=32, required=true, type="email") }}
-          <i class="field-icon success fas fa-check"></i>
-          <i class="field-icon error fas fa-times"></i>
-          <div class="error-message" id="email-error"></div>
+          <label><i class="fas fa-envelope"></i> {{ form.email.label }}</label>
+          {{ form.email(size=32) }}
         </div>
 
         <div class="form-group">
-          <label for="password">
-            <i class="fas fa-lock"></i>
-            {{ form.password.label }}
-          </label>
-          {{ form.password(id="password", size=32, required=true, minlength=8)
-          }}
-          <i class="field-icon success fas fa-check"></i>
-          <i class="field-icon error fas fa-times"></i>
-          <div class="strength-meter" id="strength-meter">
-            <div class="strength-fill" id="strength-fill"></div>
-          </div>
-          <div class="error-message" id="password-error"></div>
+          <label><i class="fas fa-lock"></i> {{ form.password.label }}</label>
+          {{ form.password(id="password", size=32) }}
         </div>
 
         <div class="form-group">
-          <label for="confirm_password">
-            <i class="fas fa-lock"></i>
-            {{ form.confirm_password.label }}
-          </label>
-          {{ form.confirm_password(id="confirm_password", size=32,
-          required=true) }}
-          <i class="field-icon success fas fa-check"></i>
-          <i class="field-icon error fas fa-times"></i>
-          <div class="error-message" id="confirm-password-error"></div>
+          <label
+            ><i class="fas fa-lock"></i> {{ form.confirm_password.label
+            }}</label
+          >
+          {{ form.confirm_password(id="confirm_password", size=32) }}
         </div>
 
         <label class="checkbox-toggle">
-          <input
-            type="checkbox"
-            id="show-password"
-            onchange="togglePasswordVisibility()"
-          />
-          <span>Show Passwords</span>
+          <input type="checkbox" onclick="togglePasswordVisibility()" />
+          Show Passwords
         </label>
 
-        <button type="submit" class="submit-btn" id="submitBtn">
-          <div class="loading-spinner"></div>
-          <span class="btn-text">{{ form.submit.label.text }}</span>
-        </button>
+        <button type="submit">{{ form.submit.label.text }}</button>
       </form>
 
       <div class="message">
         Already have an account?
-        <a href="{{ url_for('login') }}">Sign in here</a>
+        <a href="{{ url_for('login') }}">Login here</a>
       </div>
     </div>
 
     <script>
-      // Form validation and interaction
-      const form = document.getElementById("registerForm");
-      const submitBtn = document.getElementById("submitBtn");
-      const usernameInput = document.getElementById("username");
-      const emailInput = document.getElementById("email");
-      const passwordInput = document.getElementById("password");
-      const confirmPasswordInput = document.getElementById("confirm_password");
-      const strengthMeter = document.getElementById("strength-meter");
-      const strengthFill = document.getElementById("strength-fill");
-
-      // Auto-hide alerts after 5 seconds
-      const alert = document.getElementById("alert");
-      if (alert) {
-        setTimeout(() => {
-          alert.style.opacity = "0";
-          alert.style.transform = "translateY(-10px)";
-          setTimeout(() => alert.remove(), 300);
-        }, 5000);
-      }
-
-      function closeAlert() {
-        const alert = document.getElementById("alert");
-        if (alert) {
-          alert.style.opacity = "0";
-          alert.style.transform = "translateY(-10px)";
-          setTimeout(() => alert.remove(), 300);
-        }
-      }
-
       function togglePasswordVisibility() {
-        const passwordField = document.getElementById("password");
-        const confirmPasswordField =
-          document.getElementById("confirm_password");
-        const isPassword = passwordField.type === "password";
-
-        passwordField.type = isPassword ? "text" : "password";
-        confirmPasswordField.type = isPassword ? "text" : "password";
+        const pw = document.getElementById("password");
+        const cpw = document.getElementById("confirm_password");
+        pw.type = pw.type === "password" ? "text" : "password";
+        cpw.type = cpw.type === "password" ? "text" : "password";
       }
-
-      function validateField(input, errorElement, validationFn) {
-        const isValid = validationFn(input.value);
-
-        if (input.value.length === 0) {
-          input.classList.remove("error");
-          errorElement.classList.remove("show");
-          return true;
-        }
-
-        if (isValid) {
-          input.classList.remove("error");
-          errorElement.classList.remove("show");
-        } else {
-          input.classList.add("error");
-          errorElement.classList.add("show");
-        }
-
-        return isValid;
-      }
-
-      function checkPasswordStrength(password) {
-        if (password.length === 0) {
-          strengthMeter.classList.remove("show");
-          return 0;
-        }
-
-        strengthMeter.classList.add("show");
-
-        let strength = 0;
-        if (password.length >= 8) strength++;
-        if (/[a-z]/.test(password)) strength++;
-        if (/[A-Z]/.test(password)) strength++;
-        if (/[0-9]/.test(password)) strength++;
-        if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-        const strengthClasses = [
-          "strength-weak",
-          "strength-fair",
-          "strength-good",
-          "strength-strong",
-        ];
-        strengthFill.className =
-          "strength-fill " + (strengthClasses[Math.min(strength - 1, 3)] || "");
-
-        return strength;
-      }
-
-      // Real-time validation
-      usernameInput.addEventListener("input", () => {
-        validateField(
-          usernameInput,
-          document.getElementById("username-error"),
-          (value) =>
-            value.length >= 3 &&
-            value.length <= 20 &&
-            /^[a-zA-Z0-9_]+$/.test(value)
-        );
-      });
-
-      emailInput.addEventListener("input", () => {
-        validateField(
-          emailInput,
-          document.getElementById("email-error"),
-          (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-        );
-      });
-
-      passwordInput.addEventListener("input", () => {
-        const strength = checkPasswordStrength(passwordInput.value);
-        validateField(
-          passwordInput,
-          document.getElementById("password-error"),
-          (value) => value.length >= 8 && strength >= 3
-        );
-
-        // Revalidate confirm password when password changes
-        if (confirmPasswordInput.value) {
-          validateField(
-            confirmPasswordInput,
-            document.getElementById("confirm-password-error"),
-            (value) => value === passwordInput.value
-          );
-        }
-      });
-
-      confirmPasswordInput.addEventListener("input", () => {
-        validateField(
-          confirmPasswordInput,
-          document.getElementById("confirm-password-error"),
-          (value) => value === passwordInput.value
-        );
-      });
-
-      // Form submission with loading state
-      form.addEventListener("submit", function (e) {
-        const inputs = form.querySelectorAll("input[required]");
-        let isValid = true;
-
-        inputs.forEach((input) => {
-          if (!input.checkValidity()) {
-            isValid = false;
-            input.classList.add("error");
-          }
-        });
-
-        if (isValid) {
-          submitBtn.classList.add("loading");
-          submitBtn.disabled = true;
-        }
-      });
-
-      // Remove error states on focus
-      [usernameInput, emailInput, passwordInput, confirmPasswordInput].forEach(
-        (input) => {
-          input.addEventListener("focus", () => {
-            input.classList.remove("error");
-          });
-        }
-      );
     </script>
   </body>
 </html>
