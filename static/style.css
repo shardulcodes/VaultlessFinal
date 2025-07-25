@@ -521,7 +521,7 @@ form button:hover {
 
   .navbar-right {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 0.6rem;
     padding-top: 0.5rem;
     width: 100%;
