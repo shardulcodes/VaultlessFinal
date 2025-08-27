@@ -4,6 +4,11 @@
     {% block head %}{% endblock %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Font Awesome -->
     <link
@@ -93,6 +98,21 @@
 
     <!-- PAGE CONTENT -->
     <main class="main-container">{% block content %}{% endblock %}</main>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p class="footer-text">&copy; {{ current_year }} Shardul | Vaultless.</p>
+      <div class="footer-right">
+        <a href="https://github.com/shardulcodes" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/shardul-shekatkar/"
+          target="_blank"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+    </footer>
 
     <!-- SCRIPTS -->
     <script>

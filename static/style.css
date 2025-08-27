@@ -420,7 +420,7 @@ form button:hover {
   padding: 12px;
   font-size: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 100px;
   cursor: pointer;
   margin-top: 1rem;
   transition: background-color 0.2s ease;
@@ -429,7 +429,7 @@ form button:hover {
 }
 
 .generate-btn:hover {
-  background-color: #e6a75f;
+  background-color: #ff8000;
 }
 
 /* === Result Output === */
@@ -548,7 +548,7 @@ form button:hover {
   padding: 10px 12px;
   font-size: 15px;
   border: 1px solid #ff9800;
-  border-radius: 6px;
+  border-radius: 1px;
   background-color: #1e1b18;
   color: #f5e6d3;
   font-family: "Share Tech Mono", monospace;
@@ -659,4 +659,38 @@ form button:hover {
   .dropdown-content a:hover {
     background-color: rgba(255, 152, 0, 0.08);
   }
+}
+
+/*footer styling*/
+.footer {
+  background: #1e1b18;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* keeps text centered */
+  position: relative;
+  color: #ffcc80;
+  font-size: 14px;
+  padding: 40px;
+}
+
+.footer-right {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.footer-right a {
+  color: #ff9800;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: #ffcc80;
+}
+
+.footer-text {
+  margin: 0;
 }

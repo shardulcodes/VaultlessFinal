@@ -94,9 +94,9 @@ class User(UserMixin):
 
         # 🛡️ Prevent accidental/malicious secret_key overwrite attempts
         if self.secret_key and self.secret_key != existing.secret_key:
-            raise Exception("❌ Tampering detected: secret_key mismatch! Aborting update.")
+            raise Exception(" Tampering detected: secret_key mismatch! Aborting update.")
 
-        # ✅ Prepare payload WITHOUT secret_key
+        #  Prepare payload WITHOUT secret_key
         payload = {
             "username": self.username,
             "email": self.email,
@@ -107,10 +107,10 @@ class User(UserMixin):
         url = f"{SUPABASE_USERS_ENDPOINT}?id=eq.{self.id}"
         res = requests.patch(url, headers=HEADERS, json=payload)
         if res.status_code not in (200, 204):
-            print("❌ Supabase update error:", res.status_code, res.text)
+            print(" Supabase update error:", res.status_code, res.text)
             raise Exception(f"Supabase update error: {res.status_code} - {res.text}")
 
-        # ✅ Restore the correct secret_key into memory
+        #  Restore the correct secret_key into memory
         self.secret_key = existing.secret_key
 
 
@@ -147,7 +147,7 @@ class User(UserMixin):
                 return bytes.fromhex(key_str[2:])
             return base64.b64decode(key_str)
         except (binascii.Error, ValueError) as e:
-            print(f"❌ Error decoding secret_key: {e}")
+            print(f" Error decoding secret_key: {e}")
             return None
 
     @staticmethod

@@ -61,7 +61,7 @@
   {% endif %}
 </div>
 
-<!-- ✅ Floating Toast Badge (outside main layout) -->
+<!-- Floating Toast Badge (outside main layout) -->
 {% if current_user.is_authenticated %}
 <div id="login-toast" class="toast-badge">
   <i class="fas fa-user-shield"></i> Logged in securely
@@ -97,7 +97,7 @@
       }
     });
 
-  // ✅ Auto-hide the toast after 3 seconds
+  //  Auto-hide the toast after 3 seconds
   window.addEventListener("DOMContentLoaded", () => {
     const toast = document.getElementById("login-toast");
     if (toast) {
