@@ -1,89 +1,107 @@
 /* === Base === */
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  background: url("/static/images/finalbg.png") repeat;
+  background-size: 700px;
+  font-family: "Share Tech Mono", monospace;
+  background-color: #1e1b18;
+  color: #f5e6d3;
   box-sizing: border-box;
 }
 
-/* === Navbar === */
+/* === NAVBAR (Vaultless - Game Console Theme) === */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2c3e50;
-  padding: 1rem 2rem;
-  color: white;
+  background: linear-gradient(to right, #1e1b18, #25211e);
+  padding: 0.9rem 2.2rem;
+  color: #f5e6d3;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 152, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 0 rgba(255, 152, 0, 0.05);
+  font-family: "Share Tech Mono", monospace;
 }
 
+/* Brand / Logo */
 .nav-logo {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: white;
+  color: #ffb86b;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
+/* Right side links container */
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
-/* Links in navbar */
+/* Links */
 .navbar-right a,
 .user-greet {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: white;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 6px 10px;
+  padding: 8px 14px;
   border-radius: 6px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #f5e6d3;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: background-color 0.15s ease, color 0.15s ease, border 0.15s ease;
+  border: 1px solid transparent;
+  background-color: #1e1b18;
 }
 
 .navbar-right a:hover,
 .user-greet:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-  text-decoration: none;
+  background-color: rgba(255, 152, 0, 0.08);
+  border-color: rgba(255, 152, 0, 0.2);
+  color: #fff;
 }
 
-/* Logout-specific style */
+/* Logout link */
 .logout-link {
   color: #ff6b6b;
   font-weight: 600;
 }
 
 .logout-link:hover {
-  background-color: rgba(255, 107, 107, 0.1);
-  color: #ff3b3b;
+  background-color: rgba(255, 107, 107, 0.08);
+  border-color: rgba(255, 107, 107, 0.25);
+  color: #ff4c4c;
 }
 
-/* === Dropdown === */
 .user-dropdown {
   position: relative;
   display: inline-block;
 }
 
-.user-greet {
-  cursor: pointer;
-  padding: 6px 10px;
-  background-color: transparent;
-  border-radius: 6px;
+/* Invisible hover bridge */
+.user-dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* directly under the trigger */
+  left: 0;
+  width: 100%;
+  height: 10px; /* adjust to match your gap size */
+  background: transparent;
 }
 
-/* Fix flicker: display dropdown if hovering on user-dropdown OR dropdown itself */
+/* Show dropdown when hovering parent (trigger + gap + menu) */
 .user-dropdown:hover .dropdown-content,
 .user-dropdown:focus-within .dropdown-content {
   display: block;
@@ -92,15 +110,31 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  top: calc(100%);
+  top: calc(100% + 6px);
   right: 0;
-  background-color: white;
-  min-width: 200px;
+  background: #2a2521;
+  color: #f5e6d3;
+  min-width: 210px;
   border-radius: 8px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 999;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.55);
   overflow: hidden;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  z-index: 1000;
 }
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 14px;
+  color: #f5e6d3;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.dropdown-content a:hover {
+  background: rgba(255, 152, 0, 0.06);
+  color: #fff;
+}
+
 /* Flash container */
 .flash-container {
   position: fixed;
@@ -109,51 +143,55 @@ body {
   z-index: 2000;
 }
 
-/* Flash message base */
 .flash-message {
   padding: 12px 18px;
   margin-bottom: 10px;
   border-radius: 8px;
-  color: white;
+  color: #fff;
   font-weight: 500;
-  animation: fadeIn 0.3s ease-in;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.28s ease-in;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55);
+
+  min-width: 220px;
 }
 
-/* Types */
 .flash-message.success {
-  background-color: #2ecc71;
+  background-color: #2e8b57;
 }
-
 .flash-message.info {
-  background-color: #3498db;
+  background-color: #3b82f6;
 }
-
 .flash-message.warning {
-  background-color: #f1c40f;
-  color: #000;
+  background-color: #ffb74d;
+  color: #1b120b;
 }
-
 .flash-message.danger {
   background-color: #e74c3c;
 }
 
-/* Fade out animation */
-@keyframes fadeOut {
-  to {
+/* Animations */
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
 .toast-badge {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  background-color: #2ecc71;
-  color: white;
+  background-color: #2e8b57; /* success green */
+  color: #f5e6d3;
   padding: 10px 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
   z-index: 9999;
   font-size: 0.95rem;
   display: flex;
@@ -162,6 +200,7 @@ body {
   animation: slideUp 0.3s ease-out;
   opacity: 1;
   transition: opacity 0.5s ease;
+  font-family: "Share Tech Mono", monospace;
 }
 
 @keyframes slideUp {
@@ -179,18 +218,19 @@ body {
 .dropdown-content a {
   display: block;
   padding: 12px 16px;
-  color: #2c3e50;
+  color: #f5e6d3;
   text-decoration: none;
   font-size: 0.95rem;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.18s ease, color 0.18s ease;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .dropdown-content a:hover {
-  background-color: #f1f1f1;
-  color: #000;
+  background-color: rgba(255, 152, 0, 0.05);
+  color: #fff;
 }
 
-/* === Responsive Fix (Optional for small screens) */
+/* === Responsive Fix === */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -226,18 +266,20 @@ body {
 .form-section,
 .info-section {
   flex: 1 1 400px;
-  background-color: white;
+  background-color: #2a2521;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.45);
   min-width: 300px;
+  color: #f5e6d3;
 }
 
 /* === Typography === */
 h2,
 h3 {
-  color: #2c3e50;
+  color: #ffb86b;
   margin-top: 0;
+  font-family: "Share Tech Mono", monospace;
 }
 
 /* === Form === */
@@ -250,30 +292,40 @@ form label {
   margin-top: 12px;
   margin-bottom: 5px;
   font-weight: 600;
+  font-family: "Share Tech Mono", monospace;
+  color: #f5e6d3;
 }
 
 form input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  background-color: #1e1b18;
+  color: #f5e6d3;
   border-radius: 4px;
   font-size: 1rem;
-  outline-color: #2c3e50;
+  outline: none;
+  font-family: "Share Tech Mono", monospace;
+}
+
+form input:focus {
+  border-color: #ffb86b;
 }
 
 form button {
   margin-top: 20px;
   padding: 12px;
-  background-color: #2c3e50;
-  color: white;
+  background-color: #ffb86b;
+  color: #1e1b18;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.2s ease;
+  font-family: "Share Tech Mono", monospace;
 }
 
 form button:hover {
-  background-color: #1a252f;
+  background-color: #e6a75f;
 }
 
 /* === Result Display === */
@@ -281,9 +333,11 @@ form button:hover {
   margin-top: 20px;
   font-size: 1rem;
   word-wrap: break-word;
-  background-color: #f1f1f1;
+  background-color: rgba(255, 152, 0, 0.08);
   padding: 10px;
   border-radius: 5px;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
 }
 
 /* === Enhanced Generator Layout === */
@@ -299,29 +353,34 @@ form button:hover {
 .upgraded-info {
   flex: 1 1 400px;
   max-width: 500px;
-  background-color: #ffffff;
+  background-color: #2a2521;
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
   padding: 2rem 2.5rem;
+  color: #f5e6d3;
 }
 
 /* === Typography === */
 .section-title {
   margin-top: 0;
   font-size: 1.7rem;
-  color: #2c3e50;
+  color: #ffb86b;
   margin-bottom: 1.5rem;
+  font-family: "Share Tech Mono", monospace;
+  text-align: center;
 }
 
 .section-subtitle {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: #2c3e50;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .logged-in-info {
   font-size: 1rem;
-  color: #444;
+  color: #d1c2af;
+  font-family: "Share Tech Mono", monospace;
 }
 
 /* === Form === */
@@ -334,21 +393,30 @@ form button:hover {
 .styled-form label {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .styled-form input {
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 152, 0, 0.25);
   border-radius: 5px;
-  outline-color: #2c3e50;
+  background-color: #1e1b18;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
+  transition: border-color 0.2s ease;
+}
+
+.styled-form input:focus {
+  outline: none;
+  border-color: #ffb86b;
 }
 
 /* === Button === */
 .generate-btn {
-  background-color: #2c3e50;
-  color: white;
+  background-color: #ffb86b;
+  color: #1e1b18;
   padding: 12px;
   font-size: 1rem;
   border: none;
@@ -356,10 +424,12 @@ form button:hover {
   cursor: pointer;
   margin-top: 1rem;
   transition: background-color 0.2s ease;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: bold;
 }
 
 .generate-btn:hover {
-  background-color: #1a252f;
+  background-color: #e6a75f;
 }
 
 /* === Result Output === */
@@ -367,9 +437,11 @@ form button:hover {
   margin-top: 1.5rem;
   font-size: 1rem;
   word-break: break-word;
-  background-color: #f1f1f1;
+  background-color: rgba(255, 152, 0, 0.08);
   padding: 12px;
   border-radius: 6px;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
 }
 
 /* === Benefits List === */
@@ -377,13 +449,15 @@ form button:hover {
   list-style: none;
   padding: 0;
   margin: 0;
-  color: #444;
+  color: #d1c2af;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .benefits-list li {
   margin-bottom: 0.75rem;
   font-size: 1rem;
 }
+
 .benefits-list {
   list-style: none;
   padding: 0;
@@ -396,7 +470,7 @@ form button:hover {
   display: flex;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 152, 0, 0.15);
 }
 
 .benefits-list li:last-child {
@@ -404,29 +478,48 @@ form button:hover {
 }
 
 .benefits-list i {
-  color: #2c3e50;
+  color: #ffb86b;
   font-size: 18px;
   margin-right: 12px;
   width: 24px;
   text-align: center;
 }
+
+/* === Upgraded Form === */
 .upgraded-form {
-  background-color: #ffffff;
+  background-color: #2a2521;
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 1px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   max-width: 480px;
   width: 100%;
+  color: #f5e6d3;
+  border: 2px solid #ff9800;
+  position: relative; /* needed for ::before positioning */
 }
 
+.upgraded-form::before {
+  content: "PASSWORD PANEL"; /* change text as you like */
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background: #1e1b18;
+  padding: 0 6px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #ff9800;
+}
+
+/* === Section Title === */
 .section-title {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
+  color: #ff9800;
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .styled-form {
@@ -442,25 +535,28 @@ form button:hover {
 
 .form-group label {
   font-weight: 600;
-  color: #333;
+  color: #f5e6d3;
   margin-bottom: 6px;
   font-size: 15px;
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .form-group input {
   padding: 10px 12px;
   font-size: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff9800;
   border-radius: 6px;
-  transition: border-color 0.2s ease;
+  background-color: #1e1b18;
+  color: #f5e6d3;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #2c3e50;
+  border-color: #ffb86b;
 }
 
 .generate-btn {
@@ -468,37 +564,34 @@ form button:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: #2c3e50;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-.generate-btn:hover {
-  background-color: #1a252f;
-}
-
+/* === Result ID (if used) === */
 #result {
   margin-top: 1.5rem;
   font-size: 16px;
-  color: #2c3e50;
+  color: #f5e6d3;
   word-break: break-all;
+  background-color: rgba(255, 152, 0, 0.08);
+  padding: 10px;
+  border-radius: 5px;
+  font-family: "Share Tech Mono", monospace;
 }
 
 /* === Hamburger Menu === */
 .hamburger {
   display: none;
   font-size: 1.5rem;
-  color: white;
+  color: #ffb86b;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-/* Mobile-Specific Adjustments */
+.hamburger:hover {
+  color: #f5e6d3;
+}
+
+/* === Mobile-Specific Adjustments === */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -508,11 +601,15 @@ form button:hover {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    background-color: #1e1b18;
+    border-bottom: 1px solid rgba(255, 152, 0, 0.15);
   }
 
   .navbar-links {
     display: none;
     width: 100%;
+    background-color: #1e1b18;
+    border-top: 1px solid rgba(255, 152, 0, 0.15);
   }
 
   .navbar-links.show {
@@ -521,9 +618,9 @@ form button:hover {
 
   .navbar-right {
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 0.6rem;
-    padding-top: 0.5rem;
+    padding: 0.8rem 0.5rem;
     width: 100%;
   }
 
@@ -531,6 +628,15 @@ form button:hover {
   .user-greet {
     width: 100%;
     justify-content: flex-start;
+    padding: 8px 12px;
+    color: #f5e6d3;
+    font-family: "Share Tech Mono", monospace;
+    transition: background-color 0.2s ease;
+  }
+
+  .navbar-right a:hover,
+  .user-greet:hover {
+    background-color: rgba(255, 152, 0, 0.08);
   }
 
   .dropdown-content {
@@ -538,11 +644,19 @@ form button:hover {
     top: auto;
     left: auto;
     width: 100%;
-    box-shadow: none;
+    background-color: #1e1b18;
+    border-top: 1px solid rgba(255, 152, 0, 0.15);
     border-radius: 0;
+    box-shadow: none;
   }
 
   .dropdown-content a {
     padding: 10px 16px;
+    color: #f5e6d3;
+    font-family: "Share Tech Mono", monospace;
+  }
+
+  .dropdown-content a:hover {
+    background-color: rgba(255, 152, 0, 0.08);
   }
 }

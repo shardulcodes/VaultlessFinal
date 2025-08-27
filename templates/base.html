@@ -9,28 +9,38 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+      integrity="sha384-..."
+      crossorigin="anonymous"
     />
 
-    <title>Password Generator</title>
+    <title>{% block title %}Vaultless{% endblock %}</title>
+
+    <!-- Main Styles -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
-  <body>
-    <!-- ✅ NAVBAR -->
-    <nav class="navbar">
+  <body class="dark-theme">
+    <!-- NAVBAR -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
       <div class="navbar-left">
         <a href="{{ url_for('index') }}" class="nav-logo">
           <i class="fas fa-lock"></i> Vaultless
         </a>
       </div>
-      <!-- Hamburger Menu (only on mobile) -->
-      <div class="hamburger" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
-      </div>
 
-      <!-- Nav Links Wrapper -->
+      <!-- Mobile Menu Button -->
+      <button
+        class="hamburger"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="navbarLinks"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- NAV LINKS -->
       <div class="navbar-links" id="navbarLinks">
         <div class="navbar-right">
           <a href="{{ url_for('how_to_use') }}" class="nav-link">
@@ -41,11 +51,14 @@
           </a>
 
           {% if current_user.is_authenticated %}
-          <!-- ✅ Dropdown -->
           <div class="user-dropdown">
-            <div class="user-greet">
+            <button
+              class="user-greet"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <i class="fas fa-user-circle"></i> {{ current_user.username }} ▾
-            </div>
+            </button>
             <div class="dropdown-content">
               <a href="{{ url_for('change_username') }}">
                 <i class="fas fa-user-edit"></i> Change Username
@@ -70,31 +83,74 @@
       </div>
     </nav>
 
-    <!-- ✅ Flash Messages -->
-    <div class="flash-container">
+    <!-- FLASH MESSAGES -->
+    <div class="flash-container" role="alert">
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
       <div class="flash-message {{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
     </div>
 
-    <!-- ✅ MAIN CONTENT -->
-    <div class="main-container">{% block content %}{% endblock %}</div>
+    <!-- PAGE CONTENT -->
+    <main class="main-container">{% block content %}{% endblock %}</main>
 
-    <!-- ✅ Flash Auto-Hide Script -->
+    <!-- SCRIPTS -->
     <script>
+      // FLASH MESSAGE AUTO-DISMISS
       setTimeout(() => {
         document.querySelectorAll(".flash-message").forEach((msg) => {
           msg.style.animation = "fadeOut 0.8s forwards";
           setTimeout(() => msg.remove(), 800);
         });
       }, 4000);
-    </script>
-    <script>
-      function toggleMenu() {
-        const links = document.getElementById("navbarLinks");
-        links.classList.toggle("show");
-      }
+
+      // MOBILE NAV TOGGLE
+      const hamburger = document.querySelector(".hamburger");
+      const navbarLinks = document.getElementById("navbarLinks");
+
+      hamburger.addEventListener("click", () => {
+        const expanded =
+          hamburger.getAttribute("aria-expanded") === "true" || false;
+        hamburger.setAttribute("aria-expanded", !expanded);
+        navbarLinks.classList.toggle("show");
+      });
+
+      // CLOSE NAV ON OUTSIDE CLICK (Mobile)
+      document.addEventListener("click", (event) => {
+        if (
+          !navbarLinks.contains(event.target) &&
+          !hamburger.contains(event.target)
+        ) {
+          navbarLinks.classList.remove("show");
+          hamburger.setAttribute("aria-expanded", false);
+        }
+      });
+
+      // USER DROPDOWN TOGGLE
+      document.querySelectorAll(".user-greet").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const expanded =
+            btn.getAttribute("aria-expanded") === "true" || false;
+          btn.setAttribute("aria-expanded", !expanded);
+          btn.nextElementSibling.classList.toggle("show");
+        });
+      });
+
+      // CLOSE DROPDOWN ON OUTSIDE CLICK
+      document.addEventListener("click", (event) => {
+        document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
+          if (
+            !dropdown.contains(event.target) &&
+            !dropdown.previousElementSibling.contains(event.target)
+          ) {
+            dropdown.classList.remove("show");
+            dropdown.previousElementSibling.setAttribute(
+              "aria-expanded",
+              false
+            );
+          }
+        });
+      });
     </script>
   </body>
 </html>

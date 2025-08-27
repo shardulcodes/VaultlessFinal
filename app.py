@@ -119,17 +119,17 @@ def register():
         )
         user.set_password(form.password.data)
 
-        # ✅ Generate a secret key once — and only once
+        #   Generate a secret key once — and only once
         user.secret_key = os.urandom(64)
 
         try:
             user.save_to_supabase()
         except Exception as e:
-            print(f"[❌ Supabase Error] While saving user: {e}")
+            print(f"[  Supabase Error] While saving user: {e}")
             flash("Something went wrong while registering. Please try again.", "danger")
             return redirect(url_for("register"))
 
-        # ✅ Email Verification
+        #   Email Verification
         try:
             token = user.generate_verification_token()
             base_url = os.getenv("BASE_URL", "http://localhost:5000")
@@ -141,7 +141,7 @@ def register():
             msg.body = f'Click the link to verify your email: {verify_url}'
             mail.send(msg)
         except Exception as e:
-            print(f"[❌ Email Error] Failed to send email: {e}")
+            print(f"[  Email Error] Failed to send email: {e}")
             flash("Account created, but email failed to send. Contact support.", "warning")
 
         flash('Account created! Please check your email to verify.', 'success')
@@ -172,7 +172,7 @@ def verify_email(token):
             user.update_in_supabase()
             flash('Email verified! You can now log in.', 'success')
         except Exception as e:
-            print(f"[❌ Supabase Error] While verifying user: {e}")
+            print(f"[  Supabase Error] While verifying user: {e}")
             flash('Verification failed. Please try again later.', 'danger')
 
     return redirect(url_for('login'))
@@ -193,7 +193,7 @@ def login():
                     return redirect(url_for('login'))
 
                 login_user(user, remember=form.remember.data)
-                flash('Login successful.', 'success')
+                
                 return redirect(url_for('index'))
             else:
                 flash('Please verify your email before logging in.', 'warning')
@@ -219,7 +219,7 @@ def change_username():
     if form.validate_on_submit():
         if bcrypt.check_password_hash(current_user.password_hash, form.password.data):
             current_user.username = form.new_username.data
-            # ✅ Update while preserving secret_key
+            #   Update while preserving secret_key
             current_user.update_in_supabase()
             flash('Username updated successfully.', 'success')
             return redirect(url_for('index'))
@@ -235,7 +235,7 @@ def change_password():
     if form.validate_on_submit():
         if bcrypt.check_password_hash(current_user.password_hash, form.current_password.data):
             current_user.password_hash = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
-            # ✅ Update while preserving secret_key
+            #   Update while preserving secret_key
             current_user.update_in_supabase()
             flash('Password updated successfully.', 'success')
             return redirect(url_for('index'))
@@ -244,6 +244,10 @@ def change_password():
     return render_template('change_password.html', form=form)
 
 
-if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
 
+
+#if __name__ == "__main__":
+  #  app.run(ssl_context="adhoc")
+
+if __name__ == "__main__":
+    app.run(debug=True) 

@@ -1,15 +1,15 @@
-/* how_to_use.css */
+/* === HOW TO USE (Dark Warm Theme) === */
 :root {
-  --primary: #000000;
-  --primary-dark: #3a56d4;
-  --secondary: #3f37c9;
-  --accent: #4cc9f0;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --gray: #6c757d;
-  --gray-light: #e9ecef;
-  --success: #2ecc71;
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --primary: #ff9800; /* Warm amber accent */
+  --primary-dark: #ff5722; /* Deeper orange/red */
+  --secondary: #ffcc80; /* Soft amber for highlights */
+  --accent: #ffc107; /* Vibrant gold for borders/lines */
+  --light: #f5e6d3; /* Light text */
+  --dark: #1e1b18; /* Page background */
+  --panel: #2a2521; /* Card/panel background */
+  --gray: #a68c74; /* Muted warm text */
+  --success: #4caf50; /* Success green */
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   --transition: all 0.3s ease;
 }
 
@@ -20,10 +20,10 @@
 }
 
 body {
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: "Share Tech Mono", monospace;
   line-height: 1.6;
-  color: var(--dark);
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+  color: var(--light);
+  background: var(--dark);
   min-height: 100vh;
 }
 
@@ -37,7 +37,7 @@ body {
   padding: 0 1.5rem;
 }
 
-/* Header Styles */
+/* === Header Styles === */
 .howto-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -46,43 +46,43 @@ body {
 .howto-heading {
   font-size: 2.8rem;
   font-weight: 800;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary);
+  text-shadow: 0 0 8px rgba(255, 152, 0, 0.6);
   margin-bottom: 1rem;
-  letter-spacing: -0.5px;
+  letter-spacing: 2px;
 }
 
 .howto-subheading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--gray);
   max-width: 700px;
   margin: 0 auto;
   font-weight: 400;
 }
 
-/* Section Styles */
+/* === Section Titles === */
 .howto-section {
   margin-bottom: 3rem;
 }
 
 .howto-section-title {
   font-size: 2rem;
-  color: var(--primary);
+  color: var(--secondary);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid var(--accent);
+  border-bottom: 2px solid var(--primary);
   display: inline-block;
+  text-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
 }
 
 .howto-section-description {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--gray);
   margin-bottom: 2rem;
   max-width: 800px;
 }
 
-/* Card Styles */
+/* === Cards === */
 .howto-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -90,24 +90,24 @@ body {
 }
 
 .howto-card {
-  background: white;
-  border-radius: 16px;
+  background: var(--panel);
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 152, 0, 0.1);
   transition: var(--transition);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .howto-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 25px rgba(255, 152, 0, 0.3);
+  border-color: var(--primary);
 }
 
 .howto-card-image {
   height: 200px;
   overflow: hidden;
+  background: #1e1b18;
 }
 
 .howto-card-image img {
@@ -115,23 +115,21 @@ body {
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
+  filter: brightness(0.9);
 }
 
 .howto-card:hover .howto-card-image img {
   transform: scale(1.05);
+  filter: brightness(1);
 }
 
 .howto-card-content {
   padding: 1.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .step-number {
   background: var(--primary);
-  color: white;
+  color: var(--dark);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -143,9 +141,8 @@ body {
 }
 
 .howto-card p {
-  font-size: 1.1rem;
-  color: var(--dark);
-  margin: 0;
+  font-size: 1rem;
+  color: var(--light);
   line-height: 1.5;
 }
 
@@ -155,12 +152,13 @@ body {
   font-weight: 600;
 }
 
-/* Pro Tips Styles */
+/* === Pro Tips === */
 .howto-tips {
-  background: white;
-  border-radius: 16px;
+  background: var(--panel);
+  border-radius: 12px;
   padding: 2rem;
   box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 152, 0, 0.1);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -169,8 +167,8 @@ body {
   margin-bottom: 1.5rem;
   padding-left: 2.5rem;
   position: relative;
-  font-size: 1.1rem;
-  color: var(--dark);
+  font-size: 1rem;
+  color: var(--light);
 }
 
 .howto-tips li:last-child {
@@ -186,6 +184,7 @@ body {
   font-size: 1.2rem;
 }
 
+/* === Links === */
 .howto-link {
   color: var(--primary);
   text-decoration: none;
@@ -195,7 +194,7 @@ body {
 }
 
 .howto-link:hover {
-  color: var(--secondary);
+  color: var(--primary-dark);
 }
 
 .howto-link::after {
@@ -213,7 +212,7 @@ body {
   width: 100%;
 }
 
-/* Responsive Design */
+/* === Responsive === */
 @media (max-width: 768px) {
   .howto-heading {
     font-size: 2.2rem;
@@ -222,19 +221,11 @@ body {
   .howto-section-title {
     font-size: 1.6rem;
   }
-
-  .howto-card {
-    min-height: 350px;
-  }
 }
 
 @media (max-width: 480px) {
   .howto-scope {
     padding: 1rem 0;
-  }
-
-  .howto-container {
-    padding: 0 1rem;
   }
 
   .howto-heading {

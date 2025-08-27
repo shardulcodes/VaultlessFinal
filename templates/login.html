@@ -9,116 +9,121 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
       body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          system-ui, sans-serif;
-        background: linear-gradient(135deg, #e0ecf8 0%, #f8f9fa 100%);
+        background-color: #1e1b18;
+        color: #f5e6d3;
+        font-family: "Share Tech Mono", monospace;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
-        padding: 16px;
-        line-height: 1.5;
+        height: 100vh;
+        margin: 0;
+        background: url("/static/images/geargeargear.png") repeat;
+        background-size: 50px;
       }
 
       .form-container {
-        background: #ffffff;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08),
-          0 1px 3px rgba(0, 0, 0, 0.05);
+        background: #2a2521;
+        border: 2px solid #ff9800;
+        padding: 30px;
+        max-width: 400px;
         width: 100%;
-        max-width: 420px;
-        animation: fadeIn 0.5s ease-out;
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      .form-container::before {
+        content: "ACCESS PANEL";
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        background: #1e1b18;
+        padding: 0 6px;
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: #ff9800;
       }
 
       .header {
         text-align: center;
-        margin-bottom: 32px;
-      }
-
-      .header-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 48px;
-        height: 48px;
-        background: rgba(0, 123, 255, 0.1);
-        border-radius: 12px;
-        margin-bottom: 16px;
-      }
-
-      .header-icon i {
-        font-size: 20px;
-        color: #007bff;
-      }
-
-      h2 {
-        font-size: 28px;
-        font-weight: 600;
-        color: #1a202c;
-        margin-bottom: 8px;
-        letter-spacing: -0.025em;
-      }
-
-      .header-subtitle {
-        font-size: 15px;
-        color: #64748b;
-        font-weight: 400;
-      }
-
-      .form-group {
         margin-bottom: 20px;
       }
 
-      .form-label {
+      .header-icon {
+        font-size: 30px;
+        color: #ff9800;
+        margin-bottom: 10px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+        margin: 0;
+        letter-spacing: 2px;
+        color: #ff9800;
+      }
+
+      .header-subtitle {
         font-size: 14px;
-        font-weight: 500;
-        color: #374151;
+        color: #ffcc80;
+        margin-top: 5px;
+      }
+
+      .alert {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+
+        padding: 12px 16px;
+        background: #3b342f;
+        border: 1px solid #ff9800;
+        color: #ffcc80;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+
+        animation: slideIn 0.4s ease-out;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        letter-spacing: 1px;
+        color: #ffcc80;
+        margin-bottom: 5px;
       }
 
       .form-label i {
-        width: 16px;
-        font-size: 14px;
-        color: #6b7280;
+        margin-right: 8px;
+        color: #ff9800;
       }
 
       .form-input {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 10px;
-        border: 1.5px solid #e5e7eb;
-        font-size: 15px;
-        font-weight: 400;
-        background: #ffffff;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 94%;
+        padding: 10px;
+        background: #3b342f;
+        border: 1px solid #ff9800;
+        color: #ffcc80;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 14px;
         outline: none;
       }
 
       .form-input:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        background: #fefefe;
-      }
-
-      .form-input::placeholder {
-        color: #9ca3af;
-        font-weight: 400;
+        border-color: #ff5722;
       }
 
       .password-wrapper {
@@ -127,266 +132,80 @@
 
       .toggle-password {
         position: absolute;
-        right: 16px;
+        right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 16px;
-        color: #6b7280;
         cursor: pointer;
-        transition: color 0.2s ease;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .toggle-password:hover {
-        color: #374151;
+        color: #ff9800;
       }
 
       .checkbox-wrapper {
-        margin: 16px 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* keeps "Forgot password?" on the right */
+        margin-top: 10px;
+        margin-bottom: 20px;
       }
 
       .custom-checkbox {
         display: flex;
         align-items: center;
-        font-size: 14px;
-        color: #374151;
-        gap: 10px;
         cursor: pointer;
-        user-select: none;
+        font-size: 14px;
+        color: #ffcc80;
+        gap: 8px; /* spacing between checkbox and label */
+        /* remove width: 50% so it doesn’t force a break */
       }
 
       .styled-checkbox {
-        width: 18px;
-        height: 18px;
-        border: 2px solid #d1d5db;
-        border-radius: 4px;
-        background: #ffffff;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.2s ease;
-        margin: 0;
-        appearance: none;
-        -webkit-appearance: none;
+        accent-color: #ff9800;
       }
 
-      .styled-checkbox:checked {
-        background: #007bff;
-        border-color: #007bff;
+      .forgot-link {
+        font-size: 14px;
+        color: #ffcc80; /* same theme color */
+        text-decoration: none;
       }
 
-      .styled-checkbox:checked::after {
-        content: "";
-        position: absolute;
-        left: 3px;
-        top: 0px;
-        width: 4px;
-        height: 8px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-
-      .styled-checkbox:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      .forgot-link:hover {
+        text-decoration: underline;
       }
 
       .btn {
         width: 100%;
-        padding: 12px 16px;
-        background: #007bff;
-        color: white;
+        padding: 12px;
+        background: #ff9800;
         border: none;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 500;
+        color: #1e1b18;
+        font-weight: bold;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 14px;
         cursor: pointer;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        outline: none;
-        position: relative;
-        overflow: hidden;
+        letter-spacing: 2px;
       }
 
       .btn:hover {
-        background: #0056b3;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-      }
-
-      .btn:active {
-        transform: translateY(0);
-      }
-
-      .btn:focus {
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        background: #ff5722;
+        color: #fff;
       }
 
       .footer-links {
-        margin-top: 24px;
+        margin-top: 20px;
         text-align: center;
       }
 
-      .message {
-        font-size: 14px;
-        color: #6b7280;
-        margin-bottom: 16px;
-      }
-
-      .message a {
-        color: #007bff;
+      .footer-links a {
+        color: #ff9800;
         text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
+        font-size: 14px;
       }
 
-      .message a:hover {
-        color: #0056b3;
+      .footer-links a:hover {
         text-decoration: underline;
       }
 
-      .back-link {
-        padding-top: 16px;
-        border-top: 1px solid #f3f4f6;
-      }
-
-      .back-link a {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 14px;
-        color: #6b7280;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
-      }
-
-      .back-link a:hover {
-        color: #374151;
-      }
-
-      .alert {
-        padding: 12px 16px;
-        border-radius: 10px;
-        margin-bottom: 24px;
-        font-size: 14px;
-        font-weight: 500;
-        border: 1px solid;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .alert.success {
-        background-color: #f0fdf4;
-        color: #166534;
-        border-color: #bbf7d0;
-      }
-
-      .alert.success::before {
-        content: "\f058";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        color: #22c55e;
-      }
-
-      .alert:not(.success) {
-        background-color: #fef2f2;
-        color: #dc2626;
-        border-color: #fecaca;
-      }
-
-      .alert:not(.success)::before {
-        content: "\f071";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        color: #ef4444;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @media (max-width: 480px) {
-        body {
-          padding: 12px;
-        }
-
-        .form-container {
-          padding: 24px 20px;
-          border-radius: 12px;
-        }
-
-        h2 {
-          font-size: 24px;
-        }
-
-        .header-subtitle {
-          font-size: 14px;
-        }
-
-        .form-input,
-        .btn {
-          font-size: 14px;
-          padding: 11px 14px;
-        }
-
-        .header-icon {
-          width: 40px;
-          height: 40px;
-          margin-bottom: 12px;
-        }
-
-        .header-icon i {
-          font-size: 18px;
-        }
-      }
-
-      /* Loading state for button */
-      .btn.loading {
-        color: transparent;
-      }
-
-      .btn.loading::after {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        top: 50%;
-        left: 50%;
-        margin-left: -8px;
-        margin-top: -8px;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        border-top-color: transparent;
-        animation: spin 0.8s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Form validation styles */
-      .form-input.error {
-        border-color: #ef4444;
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-      }
-
-      .form-input.success {
-        border-color: #22c55e;
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+      .message {
+        margin-bottom: 10px;
       }
     </style>
   </head>
@@ -416,8 +235,8 @@
             <i class="fas fa-envelope"></i>
             {{ form.email.label }}
           </label>
-          {{ form.email(class="form-input", size=32, placeholder="Enter your
-          email address") }}
+          {{ form.email( class="form-input", size=32, placeholder=("Enter your "
+          ~ "email address") ) }}
         </div>
 
         <div class="form-group">
@@ -437,6 +256,7 @@
             {{ form.remember(class="styled-checkbox") }}
             <span>{{ form.remember.label.text }}</span>
           </label>
+          <a href="google.com" class="forgot-link">Forgot password?</a>
         </div>
 
         {{ form.submit(class="btn btn-primary", id="submitBtn") }}
@@ -458,7 +278,6 @@
     </div>
 
     <script>
-      // Password toggle functionality
       const toggle = document.getElementById("toggle-password");
       const passwordInput = document.getElementById("password");
 
@@ -469,12 +288,10 @@
         toggle.classList.toggle("fa-eye-slash");
       });
 
-      // Form validation and submission
       const form = document.getElementById("loginForm");
       const submitBtn = document.getElementById("submitBtn");
       const emailInput = document.querySelector('input[name="email"]');
 
-      // Real-time validation
       function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -501,27 +318,20 @@
         });
       }
 
-      // Add validation to email input
       if (emailInput) {
         addInputValidation(emailInput, validateEmail);
       }
-
-      // Add validation to password input
       addInputValidation(passwordInput, (value) => value.length >= 6);
 
-      // Form submission with loading state
       form.addEventListener("submit", (e) => {
         submitBtn.classList.add("loading");
         submitBtn.disabled = true;
-
-        // Remove loading state after form processes (for better UX)
         setTimeout(() => {
           submitBtn.classList.remove("loading");
           submitBtn.disabled = false;
         }, 2000);
       });
 
-      // Auto-hide alerts after 5 seconds
       const alerts = document.querySelectorAll(".alert");
       alerts.forEach((alert) => {
         setTimeout(() => {
@@ -534,14 +344,10 @@
         }, 5000);
       });
 
-      // Enhance form accessibility
       document.addEventListener("DOMContentLoaded", () => {
-        // Focus first input on page load
         if (emailInput) {
           emailInput.focus();
         }
-
-        // Add keyboard navigation for custom checkbox
         const checkbox = document.querySelector(".styled-checkbox");
         if (checkbox) {
           checkbox.addEventListener("keydown", (e) => {
