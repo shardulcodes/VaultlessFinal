@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify, make_response
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from forms import RegistrationForm, LoginForm, ChangeUsernameForm, ChangePasswordForm
+from forms import RegistrationForm, LoginForm, ChangeUsernameForm, ChangePasswordForm, ForgotPasswordForm, ResetPasswordForm
 from config import Config
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -243,9 +243,59 @@ def change_password():
             flash('Current password is incorrect.', 'danger')
     return render_template('change_password.html', form=form)
 
-@app.route('/forgot-password', methods=['GET'])
+@app.route('/forgot-password', methods=['GET','POST'])
 def forgot_password_section():
-    return render_template('forget-password.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.get_by_email(form.email.data)
+        if user:
+            try:
+                token = user.generate_reset_token()
+                base_url = os.getenv("BASE_URL","https://localhost:5000")
+                base_url="http://localhost:5000" #just for development purpose
+                reset_url = f"{base_url}/reset-password/{token}"
+                
+                msg = Message("Passwrd Reset Request",
+                              sender = app.config['MAIL_USERNAME'],
+                              recipients=[user.email])
+                
+                msg.body = f"Click the link to reset your password: {reset_url}\nIf you did not request this, please ignore."
+                mail.send(msg)
+            except Exception as e:
+                print(f"[ Email Error ] {e}")
+                flash("Error sending reset email. Try again later.", "danger")
+                return redirect(url_for('forgot_password'))
+        flash("If that email exists, a password reset link has been sent","info")
+        return redirect(url_for('login'))
+    return render_template('forgot_password.html',form=form)
+
+@app.route('/reset-password/<token>', methods=['GET','POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
+    user = User.verify_reset_token(token)
+    if not user:
+        flash("The reset link is invalid or has expired.", "danger")
+        return redirect(url_for('forgot_password_section'))
+    
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        try:
+            user.update_in_supabase()
+            flash("Your password has been updated! You can now log in.", "success")
+            return redirect(url_for('login'))
+        except Exception as e:
+            print(f"[ Supabase Error ] {e}")
+            flash("Something went wrong updating your password.", "danger")
+            return redirect(url_for('forgot_password_section'))
+    
+    return render_template('reset_password.html', form=form)
+
     
 
 

@@ -256,7 +256,7 @@
             {{ form.remember(class="styled-checkbox") }}
             <span>{{ form.remember.label.text }}</span>
           </label>
-          <a href={{url_for('index')}} class="forgot-link">Forgot password?</a>
+          <a href={{url_for('forgot_password_section')}} class="forgot-link">Forgot password?</a>
         </div>
 
         {{ form.submit(class="btn btn-primary", id="submitBtn") }}

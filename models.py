@@ -42,6 +42,21 @@ class User(UserMixin):
     def generate_verification_token(self) -> str:
         s = Serializer(Config.SECRET_KEY)
         return s.dumps(self.email)
+    
+    def generate_reset_token(self, expires_sec=1800) -> str:
+        """Generate a secure token for resetting password"""
+        s = Serializer(Config.SECRET_KEY)
+        return s.dumps(self.email, salt="password-reset-salt")
+    
+    @staticmethod
+    def verify_reset_token(token: str, expiration=1800) -> Optional['User']:
+        """Veritfy rest token and corresponding user if valid"""
+        s = Serializer(Config.SECRET_KEY)
+        try:
+            email = s.loads(token, salt="password-reset-salt", max_age=expiration)
+        except Exception:
+            return None
+        return User.get_by_email(email)
 
     @staticmethod
     def verify_token(token: str, expiration=3600) -> Optional[str]:
