@@ -255,7 +255,7 @@ def forgot_password_section():
             try:
                 token = user.generate_reset_token()
                 base_url = os.getenv("BASE_URL","https://localhost:5000")
-                base_url="http://localhost:5000" #just for development purpose
+                #base_url="http://localhost:5000" just for development purpose
                 reset_url = f"{base_url}/reset-password/{token}"
                 
                 msg = Message("Passwrd Reset Request",
