@@ -243,6 +243,12 @@ def change_password():
             flash('Current password is incorrect.', 'danger')
     return render_template('change_password.html', form=form)
 
+@app.route('/forgot-password', methods=['GET'])
+def forgot_password_section():
+    return render_template('forget-password.html')
+    
+
+
 
 
 
